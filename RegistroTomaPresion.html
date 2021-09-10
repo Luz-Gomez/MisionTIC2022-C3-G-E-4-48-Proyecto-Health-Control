@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,41 +10,37 @@
     <div>
         <h1 style="color:white">Health control</h1>
         <h2 style="color:whitesmoke">"Toma el control"</h2>
-        <h2 style="color:white">¡Registra tus Tomas de Presion aqui!</h2>
+        <h2 style="color:white">¡Registra tus Tomas de Presión aquí!</h2>
     </div>
     <div>
-        <form>Bienvenido Luz Gómez, resgitra los valores de tu toma de presión, recuerda el
-            valor más alto corresponde a la presion sistólica y el valor más bajo es la
-            la presión Diastólica, estos valores esta dados en mmHg (milimetros de mercurio).
+        <p>Bienvenido estimado usuario, registra los valores de tu toma de presión, recuerda 
+            el valor más alto corresponde a la presión sistólica y el valor más bajo es la
+            presión Diastólica, estos valores esta dados en mmHg (milímetros de mercurio).
             Las pulsaciones son los latidos del corazón por minuto (lpm).
-            <br>
-        </form>
-        <ul>
-        <li>
+        </p>
+        <form>
             <label for="presionSistolica">Presion Sistólica (mmHg):</label>
             <input type="text" id="pas" name="userPas"
                 placeholder="Valor entre 60-250">
-        </li>
-        <li>
+            <br>
             <label for="presionDiastolica">Presion Diastólica (mmHg):</label>
             <input type="text" id="pad" name="userPad"
                 placeholder="Valor entre 30-180">
-       </li>
-        <li>
+            <br>
             <label for="pulsaciones">Pulsaciones (lpm):</label>
             <input type="text" id="pulsaciones" name="userPulso"
                 placeholder="Valor entre 60-170">
-         </li>
-        </ul>
-        <button type="submit">Guardar</button>
+            <br><br>
+            <button type="submit">Guardar</button>
+        </form>
         <div>
             <h1>Listado de presiones registradas</h1>
             <table>
             <tr>
-              <td><strong>Fecha</strong></td>
-              <td><strong>Sistole</strong></td>
-              <td><strong>Diastole</strong></td>
-              <td><strong>Pulsaciones</strong></td>
+                <td><strong>Fecha</strong></td>
+                <td><strong>Sistole</strong></td>
+                <td><strong>Diastole</strong></td>
+                <td><strong>Pulsaciones</strong></td>
             </tr>
         </div>
     </div>
