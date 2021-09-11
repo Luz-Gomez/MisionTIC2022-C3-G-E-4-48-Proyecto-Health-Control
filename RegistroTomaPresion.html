@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health control</title>
+</head>
+<body style="background-color: rgb(101, 179, 252);">
+    <div>
+        <h1 style="color:white">Health control</h1>
+        <h2 style="color:whitesmoke">"Toma el control"</h2>
+        <h2 style="color:white">¡Registra tus Tomas de Presión aquí!</h2>
+    </div>
+    <div>
+        <p>Bienvenido estimado usuario, registra los valores de tu toma de presión, recuerda 
+            el valor más alto corresponde a la presión sistólica y el valor más bajo es la
+            presión Diastólica, estos valores esta dados en mmHg (milímetros de mercurio).
+            Las pulsaciones son los latidos del corazón por minuto (lpm).
+        </p>
+        <form>
+            <label for="presionSistolica">Presion Sistólica (mmHg):</label>
+            <input type="text" id="pas" name="userPas"
+                placeholder="Valor entre 60-250">
+            <br>
+            <label for="presionDiastolica">Presion Diastólica (mmHg):</label>
+            <input type="text" id="pad" name="userPad"
+                placeholder="Valor entre 30-180">
+            <br>
+            <label for="pulsaciones">Pulsaciones (lpm):</label>
+            <input type="text" id="pulsaciones" name="userPulso"
+                placeholder="Valor entre 60-170">
+            <br><br>
+            <button type="submit">Guardar</button>
+        </form>
+        <div>
+            <h1>Listado de presiones registradas</h1>
+            <table>
+            <tr>
+                <td><strong>Fecha</strong></td>
+                <td><strong>Sistole</strong></td>
+                <td><strong>Diastole</strong></td>
+                <td><strong>Pulsaciones</strong></td>
+            </tr>
+        </div>
+    </div>
+</body>
+</html>
