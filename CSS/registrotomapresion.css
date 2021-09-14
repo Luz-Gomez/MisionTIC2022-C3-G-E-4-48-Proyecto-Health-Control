@@ -1,0 +1,66 @@
+body {
+    background-color: #65B3FC;
+}
+
+h1 {
+    text-align: center;
+    font-size: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+h2 {
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+h4 {
+    text-align: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+p {
+    background-color: #9B9B9F;
+    font-family:Arial, Helvetica, sans-serif;
+    color: whitesmoke;
+}
+
+#botones {
+    background-color: #FFBE5E;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#tabla {
+    background-color: #565656;
+    font-family:Arial, Helvetica, sans-serif;
+    color: whitesmoke;
+}
+
+#mostrar_datos {
+    background-color: #ffffff;
+    text-align: center;
+    font-family:Arial, Helvetica, sans-serif;
+    color: rgb(10, 10, 10);
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#mostrar_datos td, #mostrar_datos th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+#mostrar_datos tr:nth-child(even){background-color: #f2f2f2;}
+  
+#mostrar_datos tr:hover {background-color: #ddd;}
+  
+#mostrar_datos th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #9B9B9F;
+    color: white;
+}
