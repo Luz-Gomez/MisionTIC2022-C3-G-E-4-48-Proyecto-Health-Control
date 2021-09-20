@@ -1,8 +1,10 @@
 <template>
   <div id="app">
+    <h1>Bienvenidos a Health control</h1>
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/">Inicio</router-link> |
+      <router-link to="/about">Acerca de</router-link> |
+      <router-link to="/registro">Regístrate</router-link>
     </div>
     <router-view/>
   </div>
@@ -14,19 +16,20 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #65B3FC;
 }
 
 #nav {
   padding: 30px;
+  color: #65B3FC;
 }
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #65B3FC;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #FFBE5E
 }
 </style>
