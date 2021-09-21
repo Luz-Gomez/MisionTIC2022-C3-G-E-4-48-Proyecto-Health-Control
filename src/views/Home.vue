@@ -1,15 +1,19 @@
 <template>
-  <hello-world />
+<div class="home">
+    <h1>Bienvenidos a Health control</h1>
+  <p> Esto es un parrafo
+  </p>  
+</div>
+
+  
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld'
+  
 
   export default {
     name: 'Home',
 
-    components: {
-      HelloWorld,
-    },
+    
   }
 </script>
