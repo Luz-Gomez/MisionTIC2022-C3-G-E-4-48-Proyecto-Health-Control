@@ -1,3 +1,29 @@
-# MisionTIC2022-C3-G-E-4-48-Proyecto-Health-Control
+# health-control-ge-4-48
 
-Este proyecto es para la creación de un sitio web llamado Health control, en el que el usuario puede llevar un registro y control de sus tomas de presión y calcular su índice de masa corporal.
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your unit tests
+```
+npm run test:unit
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pressure Tapping Record</title>
+    <link rel="stylesheet" href="../CSS/registrotomapresion.css">
+</head>
+<body>
+    <div id="encabezado">
+        <h1 id="proyecto">Health control</h1>
+        <h1 id="titulo">Pressure Tapping Record</h1>
+        <h2 id="ventana">¡Registra tus Tomas de Presión aquí!</h2>
+    </div>
+    <div id="bienvenida">
+        <p>Bienvenido estimado usuario, registra los valores de tu toma de presión, recuerda 
+            el valor más alto corresponde a la presión sistólica y el valor más bajo es la
+            presión Diastólica, estos valores esta dados en mmHg (milímetros de mercurio).
+            Las pulsaciones son los latidos del corazón por minuto (lpm).
+        </p>
+    </div>
+    <div id="datos_presion">
+        <form method="POST" action="">Regístra tus datos:</form>
+        <label for="presionSistolica">Presion Sistólica (mmHg):</label>
+        <input type="text" id="pas" name="userPas"
+                placeholder="Valor entre 60-250">
+        <br><br>
+        <label for="presionDiastolica">Presion Diastólica (mmHg):</label>
+        <input type="text" id="pad" name="userPad"
+                placeholder="Valor entre 30-180">
+        <br><br>
+        <label for="pulsaciones">Pulsaciones (lpm):</label>
+        <input type="text" id="pulsaciones" name="userPulso"
+                placeholder="Valor entre 60-170">
+        <br><br>
+    </div>
+    <div id="botones" class="container-l">
+        <br>
+        <button id="guardar" type="button">Guardar</button>
+        <button id="consultar" type="button">Consulta Tips</button>
+        <button id="regresar" type="button">Regresar</button>
+        <br><br>
+    </div>
+    <div id="tabla">
+        <h4>Listado de presiones registradas</h4>
+        <table id=mostrar_datos>
+            <tr>
+                <th>Fecha</th>
+                <th>Sístole</th>
+                <th>Diástole</th>
+                <th>Pulsaciones</th>
+                <th>Presión Arterial</th>
+            </tr>
+            <tr>
+                <td>2021/09/09</td>
+                <td>120</td>
+                <td>80</td>
+                <td>70</td>
+                <td>Normal</td>
+            </tr>
+            <tr>
+                <td>2021/09/10</td>
+                <td>145</td>
+                <td>95</td>
+                <td>79</td>
+                <td>Hipertensión</td>
+            </tr>
+            <tr>
+                <td>2021/09/11</td>
+                <td>100</td>
+                <td>50</td>
+                <td>60</td>
+                <td>Hipotensión</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
