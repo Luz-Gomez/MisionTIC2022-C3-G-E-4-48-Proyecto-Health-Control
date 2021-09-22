@@ -1,12 +1,22 @@
 <template>
-  <v-app>
+  <v-card class="overflow-hidden">
     <v-app-bar
-      app
-      color="primary"
+      absolute
+      color="#65B3FC"
       dark
+      shrink-on-scroll
+      prominent
+      src="https://picsum.photos/1920/1080?random"
+      fade-img-on-scroll
+      scroll-target="#scrolling-techniques-3"
     >
-      <div class="d-flex align-center">
+      <template v-slot:img="{ props }">
         <v-img
+          ajustar-app
+          v-bind="props"
+          gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
+        ></v-img>
+      </template>
           alt="Vuetify Logo"
           class="shrink mr-2"
           contain
@@ -14,42 +24,53 @@
           transition="scale-transition"
           width="40"
         />
+      main
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+
+      <v-app-bar-title>Health control</v-app-bar-title>
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
       </v-btn>
-    </v-app-bar>
 
-    <v-main>
-      <router-view/>
-    </v-main>
-  </v-app>
+      <v-btn icon>
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-dots-vertical</v-icon>
+      </v-btn>
+
+      <template v-slot:extension>
+        <v-tabs align-with-title>
+          <v-tab>Acerca de</v-tab>
+          <v-tab>Registro</v-tab>
+          <v-tab>Servicios</v-tab>
+        </v-tabs>
+      </template>
+    </v-app-bar>
+    <v-sheet
+      id="scrolling-techniques-3"
+      class="overflow-y-auto"
+      max-height="200"
+    >
+      <v-container style="height: 5000px;"></v-container>
+      <v-parallax
+    height="300"
+    src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+  ></v-parallax>
+
+    </v-sheet>
+  </v-card> 
+
+  
 </template>
 
 <script>
-
-export default {
-  name: 'App',
-
-  data: () => ({
-    //
-  }),
-};
+  export default {
+    data: () => ({ drawer: null }),
+  }
 </script>
