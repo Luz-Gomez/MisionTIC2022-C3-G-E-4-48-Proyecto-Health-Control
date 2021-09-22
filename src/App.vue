@@ -10,7 +10,7 @@
           alt="Vuetify Logo"
           class="shrink mr-2"
           contain
-          src="https://www.partesdel.com/wp-content/uploads/Estetoscopio-Adulto-Cl%C3%A1sico.png"
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
           transition="scale-transition"
           width="40"
         />
