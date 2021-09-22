@@ -12,10 +12,19 @@
     >
       <template v-slot:img="{ props }">
         <v-img
+          ajustar-app
           v-bind="props"
           gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
         ></v-img>
       </template>
+          alt="Vuetify Logo"
+          class="shrink mr-2"
+          contain
+          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          transition="scale-transition"
+          width="40"
+        />
+      main
 
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
