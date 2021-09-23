@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <br>
+    <body>
     <h1>¿Qué es Health control?</h1>
     <br>
     <p>Health control es la aplicación que te permite <span id="objetivo">llevar un registro</span> permanente
@@ -14,7 +14,25 @@
             compartidos por los profesionales de la salud que están disponibles para aclarar cualquier duda que te surga, 
             puedes <span id="objetivo4">contactar con ellos, agendar tus citas y obtener tus datos de presión en formato pdf</span>, 
             para imprimirlo o recibirlo directamente en tu correo, cuando y donde quieras.</p>
+    </body>
   </div>
-  
 </template>
+
+<style>
+h1 {
+  text-align: center;
+  font-family: monospace;
+  font-size: 60px;
+  padding: 50px 25px 20px 25px;
+  color: white;
+}
+
+p {
+  text-align: justify;
+  font-family: monospace;
+  font-size: 20px;
+  padding: 10px 100px 10px 100px;
+  color: whitesmoke;
+}
+</style>
  
