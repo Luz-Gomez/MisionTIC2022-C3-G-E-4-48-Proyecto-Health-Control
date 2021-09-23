@@ -1,14 +1,14 @@
 <template>
-  <v-card class="overflow-hidden">
+  <v-app>
     <v-app-bar
       absolute
       color="#65B3FC"
       dark
       shrink-on-scroll
       prominent
-      src="https://picsum.photos/1920/1080?random"
+      src="./assets/imagenes/saludable.png"
       fade-img-on-scroll
-      scroll-target="#scrolling-techniques-3"
+      app
     >
       <template v-slot:img="{ props }">
         <v-img
@@ -17,14 +17,6 @@
           gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
         ></v-img>
       </template>
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-      main
 
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
@@ -46,31 +38,29 @@
 
       <template v-slot:extension>
         <v-tabs align-with-title>
-          <v-tab>Acerca de</v-tab>
-          <v-tab>Registro</v-tab>
-          <v-tab>Servicios</v-tab>
+          <v-tab to="/">Home</v-tab>
+          <v-tab to="/About">About</v-tab>
+          <v-tab to="/DatosUsuario">Registro</v-tab>
+          <v-tab to="/TomaPresion">Servicios</v-tab>
         </v-tabs>
       </template>
     </v-app-bar>
-    <v-sheet
-      id="scrolling-techniques-3"
-      class="overflow-y-auto"
-      max-height="200"
-    >
-      <v-container style="height: 5000px;"></v-container>
-      <v-parallax
-    height="300"
-    src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
-  ></v-parallax>
-
-    </v-sheet>
-  </v-card> 
-
-  
+    <v-main>
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-  export default {
-    data: () => ({ drawer: null }),
-  }
+export default {
+  data: () => ({ drawer: null }),
+};
 </script>
+
+<style>
+.v-app-bar-title__content {
+  width: 200px;
+}
+</style>
