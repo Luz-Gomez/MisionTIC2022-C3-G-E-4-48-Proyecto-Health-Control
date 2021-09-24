@@ -27,7 +27,8 @@
         debajo de 120/80 mm Hg. Para un adulto si la presión sistólica está
         entre 120 y 129 y la diastólica es menor a 80, entonces la presión
         arterial está elevada.
-      </p><br>
+      </p>
+      <br />
       <v-img
         id="logo"
         lazy-src="../assets/imagenes/chicamorena.jpg"
@@ -36,12 +37,19 @@
         position="center center"
         light="true"
         src="../assets/imagenes/chicamorena.jpg"
-      ></v-img><br>
-      <p>Para que tengas un control de los registros de tus tomas de presión, hemos creado Health control, 
-        la aplicación que te permite registrar tus tomas de presión y ver tus valores de presión diastólica 
-        y sistólica en todo momento. Puedes accesar desde cualquier lugar y consultar tus datos en todo momento,
-         incluso podrás brindarle acceso a tu médico de cabecera para que pueda monitorear tu estado de salud y 
-         agendar tus citas cuando lo considere necesario.
+      ></v-img
+      ><br />
+      <v-btn id="boton" class="white blue--text" block elevation="5" outlined rounded text large 
+        >Regístrate ahora</v-btn
+      >
+      <p>
+        Para que tengas un control de los registros de tus tomas de presión,
+        hemos creado Health control, la aplicación que te permite registrar tus
+        tomas de presión y ver tus valores de presión diastólica y sistólica en
+        todo momento. Puedes accesar desde cualquier lugar y consultar tus datos
+        en todo momento, incluso podrás brindarle acceso a tu médico de cabecera
+        para que pueda monitorear tu estado de salud y agendar tus citas cuando
+        lo considere necesario.
       </p>
     </body>
   </div>
@@ -72,6 +80,11 @@ p {
   padding: 10px 100px 10px 100px;
   color: whitesmoke;
 }
+
+#boton {
+  font-family: monospace;
+}
+
 </style>
 
 

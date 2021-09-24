@@ -6,7 +6,7 @@
       elevate-on-scroll
       scroll-target="#scrolling-techniques-7"
     >
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-spacer></v-spacer>
 
@@ -22,28 +22,57 @@
         <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
     </v-app-bar>
+
+    <v-navigation-drawer v-model="drawer" absolute bottom temporary>
+      <v-list nav dense>
+        <v-list-item-group
+          v-model="group"
+          class="deep-purple--text text--accent-4"
+          src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
+          width="100%"
+          app
+        >
+          <v-list-item>
+            <v-list-item-title>Inicio</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title>Acerca de</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title>Datos de usuario</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title>Toma de presión</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+
     <v-sheet
       id="scrolling-techniques-7"
       class="overflow-y-auto"
       max-height="600"
     >
-    
-    <router-view></router-view>
-
+      <router-view></router-view>
     </v-sheet>
   </v-card>
-  
 </template>
 
 
 <script>
 export default {
-  data: () => ({ drawer: null }),
+  data: () => {
+    return {
+      drawer: false,
+      items: [
+        ["mdi-Home","Inicio"],
+        ["mdi-About","Acerca de"]
+      ]
+    }
+  }
 };
 </script>
 
-<style>
-.v-app-bar-title__content {
-  width: 200px;
-}
-</style>
