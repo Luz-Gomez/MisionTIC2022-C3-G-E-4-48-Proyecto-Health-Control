@@ -1,7 +1,8 @@
 <template>
+<body>
   <v-form>
     <v-container>
-      <h3>Este es el Perfil del Usuario</h3>
+      <h3>Crea tu usuario</h3>
       <v-row>
         <v-col cols="10" sm="10">
           <v-text-field
@@ -102,6 +103,7 @@
       <v-btn>Home</v-btn>
     </v-row>
   </v-form>
+</body>
 </template>
 
 <script>
@@ -132,5 +134,9 @@ export default {
 </script>
 
 <style>
-
+h3 {
+  padding: 50px 50px 50px 50px;
+  font-family: monospace;
+  color: white;
+}
 </style>

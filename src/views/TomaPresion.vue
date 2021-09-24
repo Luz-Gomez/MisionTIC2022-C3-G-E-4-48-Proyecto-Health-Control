@@ -52,5 +52,9 @@
 </script>
 
 <style>
-
+h3 {
+  padding: 100px 50px 50px 50px;
+  font-family: monospace;
+  
+}
 </style>
