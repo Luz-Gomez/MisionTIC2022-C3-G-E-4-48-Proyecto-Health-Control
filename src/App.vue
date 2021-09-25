@@ -32,19 +32,19 @@
           width="100%"
           app
         >
-          <v-list-item>
+          <v-list-item to="/">
             <v-list-item-title>Inicio</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item to="/About">
             <v-list-item-title>Acerca de</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item to="/DatosUsuario">
             <v-list-item-title>Datos de usuario</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item to="/TomaPresion">
             <v-list-item-title>Toma de presión</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
