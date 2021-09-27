@@ -1,6 +1,6 @@
 {
   "name": "health-control-ge-4-48",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -29,5 +29,20 @@
     "vue-cli-plugin-vuetify": "~2.4.2",
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.7.0"
-  }
+  },
+  "description": "```\r npm install\r ```",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Luz-Gomez/MisionTIC2022-C3-G-E-4-48-Proyecto-Health-Control.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Luz-Gomez/MisionTIC2022-C3-G-E-4-48-Proyecto-Health-Control/issues"
+  },
+  "homepage": "https://github.com/Luz-Gomez/MisionTIC2022-C3-G-E-4-48-Proyecto-Health-Control#readme"
 }
