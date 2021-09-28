@@ -1,47 +1,56 @@
 <template>
   <div class="home">
     <body>
+      <h1>Bienvenidos a Health control</h1>
       <v-img
         id="logo"
-        lazy-src="../assets/imagenes/logo-health-control.png"
-        max-height="1200"
-        max-width="700"
+        lazy-src="../assets/imagenes/logoHC.png"
+        max-height="50"
+        max-width="1100"
         position="center center"
         light="true"
-        src="../assets/imagenes/logo-health-control.png"
+        src="../assets/imagenes/logoHC.png"
       ></v-img>
-      <h1>Bienvenidos a Health control</h1>
       <br />
       <p>
-        La presión arterial es uno de los aspectos de nuestra salud que más
-        debemos cuidar, es la fuerza que ejerce la sangre sobre las paredes de
-        las arterias, por tanto, monitorearla juega un papel crucial en la
-        prevención de ataques cardiacos o accidentes cerebro vaculares.<br /><br />
-        Cuando tu corazón late, bombea la sangre que ejerce una presión alta
-        sobre las arterias, esta se conoce como presión sistólica. Cuando tu
-        corazón reposa entre latidos, la presión es más baja y se le llama
-        presión diastólica.<br /><br />
-        La lectura de presión arterial se da en milímetros de mercurio (mm Hg) y
-        tiene dos números, el primero representa la presión sistólica y el
-        segundo, la presión diastólica. Una presión arterial normal está por
-        debajo de 120/80 mm Hg. Para un adulto si la presión sistólica está
-        entre 120 y 129 y la diastólica es menor a 80, entonces la presión
-        arterial está elevada.
+        La aplicación que te permitirá llevar un registro de tus tomas de presión, para seguir un control de tu propia salud. En cualquier  
+        momento y lugar podrás acceder a tus datos y análisis sobre tu estado de presión arterial.<br /><br />
+        También podrás calcular tu índice de masa corporal para saber si estás pasado o pasada de peso. Este dato es importante para mantener 
+        estable los valore de presión arterial y asegurarse de que se mantendrán estables en el tiempo. En Health control, queremos cuidarte 
+        y ayudarte a que tengas el control de tu salud, 
       </p>
       <br />
+      <div class="text-center">
+    <v-btn to="/Registro"
+      rounded
+      color="info"
+      dark
+      class="ma-2"
+      :loading="loading4"
+      :disabled="loading4"
+      @click="loader = 'loading4'"
+    >
+      Registrate ahora
+      <template v-slot:loader>
+        <span class="custom-loader">
+          <v-icon light>mdi-cached</v-icon>
+        </span>
+      </template>
+    </v-btn>
+  </div>
+  
+<br>
+<br>
       <v-img
         id="logo"
         lazy-src="../assets/imagenes/chicamorena.jpg"
-        max-height="400"
-        max-width="1100"
+        max-height="100"
+        max-width="900"
         position="center center"
         light="true"
         src="../assets/imagenes/chicamorena.jpg"
       ></v-img
       ><br />
-      <v-btn id="boton" class="white blue--text" block elevation="5" outlined rounded text large 
-        >Regístrate ahora</v-btn
-      >
       <p>
         Para que tengas un control de los registros de tus tomas de presión,
         hemos creado Health control, la aplicación que te permite registrar tus
@@ -63,7 +72,7 @@ body {
 #logo {
   display: block;
   margin: auto;
-  padding: 100px 100px 15px 25px;
+  padding: 250px 100px 15px 25px;
 }
 h1 {
   text-align: center;
@@ -82,7 +91,10 @@ p {
 }
 
 #boton {
+  display: block;
+  margin: auto;
   font-family: monospace;
+  padding: 20px 20px 20px 20px;
 }
 
 </style>
