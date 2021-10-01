@@ -9,18 +9,18 @@
           <v-text-field
             label="Nombre"
             solo
-            :rules="nameRules"
+            :rules="nombreRules"
             hide-details="auto"
-            v-model="name"
+            v-model="nombre"
           ></v-text-field>
         </v-col>
         <v-col cols="10" sm="4">
           <v-text-field
             label="Apellido"
             solo
-            :rules="nameRules"
+            :rules="nombreRules"
             hide-details="auto"
-            v-model="name"
+            v-model="apellido"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -67,9 +67,9 @@
           <v-text-field
             label="Numero celular"
             solo
-            :rules="phoneRules"
+            :rules="celularRules"
             hide-details="auto"
-            v-model="phoneNumber"
+            v-model="celular"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -84,7 +84,7 @@
             solo
             :rules="medicoRulers"
             hide-details="auto"
-            v-model="medico"
+            v-model="nomMedico"
           ></v-text-field>
         </v-col>
         <v-col cols="10" sm="4">
@@ -93,7 +93,7 @@
             solo
             :rules="medicoRulers"
             hide-details="auto"
-            v-model="medico"
+            v-model="apeMedico"
           ></v-text-field>
  
         </v-col>
@@ -114,7 +114,7 @@
         v-model="visibilidad"
         required
       ></v-checkbox>
-      <v-btn rounded dark>Guardar</v-btn>
+      <v-btn id="boton" rounded dark v-on:click="guardarUsuario()">Guardar</v-btn>
     </v-container>
   </v-form>
 </body>
@@ -124,13 +124,15 @@
 export default {
   data() {
     return {
-      name: "",
+      nombre: "",
+      apellido:"",
       fechaNacimiento: "",
       peso: "",
       estatura: "",
-      phoneNumber: "",
-      medicoTratante: "",
-      nameRules: [
+      celular: "",
+      nomMedico: "",
+      apeMedico: "",
+      nombreRules: [
         (value) => !!value || "Required.",
         (value) => (value && value.length >= 5) || "Min 5 characters",
       ],
@@ -138,21 +140,61 @@ export default {
         (value) => !!value || "Required.",
         (value) => (value && value.length == 10) || "AAAA/MM/DD",
       ],
-      phonerules: [(value) => (value && value.length == 10) || "#########"],
+      celularRules: [(value) => (value && value.length == 10) || "#########"],
       medicoRules: [
         (value) => (value && value.length >= 5) || "Min 5 characters",
       ],
       picker: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-    }
+    };
   },
-  methods: {}
-}
+  mounted() {
+    let listaUsuarios = JSON.parse(localStorage.getItem("listaUsuarios"));
+    if(listaUsuarios != undefined){
+      this.listaUsuarios = listaUsuarios;
+          }
+  },
+  methods: {
+    guardarUsuario() {
+      let listaUsuarios = JSON.parse(localStorage.getItem("listaUsuarios"));
+      if(listaUsuarios == undefined){
+        listaUsuarios =[]
+      }
+      const codigo = 1;
+      const usuario = {
+        codigo: codigo,
+        nombre:this.nombre,
+        apellido:this.apellido,
+        fechaNacimiento:this.picker,
+        estatura:this.estatura,
+        peso:this.peso,
+        celular:this.celular,
+        nomMedico:this.nomMedico,
+        apeMedico:this.apeMedico,
+        alerta:this.alerta,
+        visibilidad:this.visibilidad,
+      };
+      listaUsuarios.push(usuario);
+      this.nombre = "";
+      this.apellido = "";
+      this.picket = Date.now();
+      this.estatura = "";
+      this.peso = "";
+      this.celular = "";
+      this.nomMedico = "";
+      this.apeMedico = "";
+      this.alerta = "";
+      this.visibilidad = "";
+
+      localStorage.setItem("listaUsuarios", JSON.stringify(listaUsuarios));
+    },
+  },
+};
 </script>
 
 <style>
 h2 {
-  padding: 10px 10px 10px 10px;
-  text-align: center;
+  padding: 60px 10px 10px 10px;
+  text-align: left;
   font-family: monospace;
   color: white;
 }
@@ -170,5 +212,8 @@ h5 {
 }
 .v-picker__title {
   background-color: #6590fc;
+}
+#boton {
+  float: left
 }
 </style>
