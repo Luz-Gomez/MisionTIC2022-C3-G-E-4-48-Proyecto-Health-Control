@@ -3,6 +3,16 @@
     <body>
     <h1>¿Qué es Health control?</h1>
     <br>
+    <v-img
+        id="img"
+        lazy-src="../assets/imagenes/chicamorena.jpg"
+        max-height="100"
+        max-width="900"
+        position="center center"
+        light="true"
+        src="../assets/imagenes/chicamorena.jpg"
+      ></v-img
+      ><br />
     <p>Health control es la aplicación que te permite <span id="objetivo">llevar un registro</span> permanente
             de tus mediciones de <strong>presión arterial</strong>, para llevar un control periódico de tu estado de salud, que te permita obtener 
             un <strong>diagnóstico</strong> definir un <strong>tratamiento</strong> y prevenir posibles accidentes cardiovasculares y renales.
@@ -35,4 +45,14 @@ p {
   color: whitesmoke;
 }
 </style>
+
+<script>
+export default {
+  data() {
+    return{
+
+    };
+  }
+}
+</script>
  
