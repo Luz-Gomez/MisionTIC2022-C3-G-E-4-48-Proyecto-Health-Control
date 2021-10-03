@@ -26,7 +26,7 @@
       </v-row>
       <v-row justify="space-around">
         <v-col cols="10" sm="4"> 
-          <v-date-picker
+          <v-date-picker 
             v-model="picker"
           ></v-date-picker>
         </v-col>
@@ -109,7 +109,7 @@
       <v-checkbox 
         :error-messages="errors"
         value="1"
-        label=" Permite que sus datos de IMC y Categoria de peso sean visibles dentro de esta APP, pero fuera de esta pagina"
+        label=" Permite que sus datos de IMC y Categoria de peso sean visibles dentro de esta APP, pero no fuera de esta pagina"
         type="checkbox"
         v-model="visibilidad"
         required
