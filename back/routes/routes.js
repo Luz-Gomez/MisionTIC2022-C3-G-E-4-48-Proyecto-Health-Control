@@ -18,12 +18,12 @@ const cargas = multer({storage: storageConfig});
 
 const router = express.Router();
 
-//Rutas de registro de usuarios
+//Rutas de Login
 router.post("/usuarios", UsuariosController.insert);
 router.post("/autenticar", UsuariosController.validarUsuario);
 
 //Rutas de perfil de usuario
-router.post("/usuarios", PerfilUsuarioController.insert);
+router.post("/perfilUsuario", PerfilUsuarioController.insert);
 router.get("/perfilUsuario", PerfilUsuarioController.getAll);
 router.get("perfilUsuario/:id", PerfilUsuarioController.getById);
 router.put("/perfilUsuario7:id", PerfilUsuarioController.update);

@@ -5,4 +5,4 @@ const consejosSchema = mongoose.Schema({
    "consejo" : String,
 });
 
-module.exports = mongoose.model("Consjeos", usuariosSchema, "Consejos")
+module.exports = mongoose.model("Consejos", consejosSchema, "Consejos")
