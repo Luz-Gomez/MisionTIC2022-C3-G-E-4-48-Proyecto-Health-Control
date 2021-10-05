@@ -39,6 +39,9 @@ export default {
     name: "Health control",
     drawer: null,
   }),
+  updated(){
+    console.log("app actualizada");
+  },
   methods: {
     switchDrawer(value) {
       this.drawer = value;
