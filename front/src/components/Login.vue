@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import {validarUsuario} from "../services/Login.Service";
+
 export default {
   data() {
     return {
@@ -41,11 +43,16 @@ export default {
   },
   methods: {
     loginFunction() {
-      console.log("print email " + this.email);
-      sessionStorage.setItem("username", this.email);
-      sessionStorage.setItem("role", "admin");
-      this.$emit("logged", undefined);
-      window.location.reload();
+
+      validarUsuario(this.mail, this.contraseña)
+      .then((respuesta) => {
+        const usuario = respuesta.data;
+        sessionStorage.setItem("mail", usuario.mail);
+        sessionStorage.setItem("tipo", usuario.tipo);
+        this.$emit("logged", undefined);
+        window.location.reload();
+      })
+  .catch((err) => console.log(err))     
     },
   },
 };
