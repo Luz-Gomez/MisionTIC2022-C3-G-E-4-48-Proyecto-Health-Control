@@ -21,6 +21,11 @@ const routes = [
     component: () => import('../views/DatosUsuario.vue')
   },
   {
+    path: '/DatosMedico',
+    name: 'DatosMedico',
+    component: () => import('../views/DatosMedico.vue')
+  },
+  {
     path: '/TomaPresion',
     name: 'TomaPresion',
     component: () => import('../views/TomaPresion.vue')
