@@ -5,7 +5,7 @@ module.exports = class UsuariosController {
     static async insert (req, res) {
         try {
             let usuario = req.body;
-            usuario = await usuariosModel.insert(usuario);
+            usuario = await usuariosModel.create(usuario);
             usuario.contraseña = undefined;
             res.status(201).json(usuario);
         } catch (err) {
