@@ -1,24 +1,22 @@
 <template>
   <div class="home">
     <body>
-      <h2>Bienvenidos a Helath control</h2>
+      <h1>Cuida tu presión arterial</h1>
       <v-img
         id="logo"
-        lazy-src="../assets/imagenes/health control.png"
+        lazy-src="../assets/imagenes/logoHealthControl.png"
         max-height="50"
-        max-width="1100"
+        max-width="950"
+        min-height="50"
+        min-width="200"
         position="center center"
         light="true"
-        src="../assets/imagenes/health control.png"
+        src="../assets/imagenes/logoHealthControl.png"
       ></v-img>
-      <br />
       <p>
-        La aplicación que te permitirá llevar un registro de tus tomas de presión, para seguir un control de tu propia salud. En cualquier  
-        momento y lugar podrás acceder a tus datos y análisis sobre tu estado de presión arterial.<br /><br />
-        Si lo deseas, también puedes calcaular tu índice de masa corporal. Este dato es importante para mantener 
-        estable los valores de presión arterial y asegurarse de que se mantendrán estables en el tiempo. En Health control, queremos cuidarte 
-        y ayudarte a que tengas el control de tu salud. 
-      </p><br>        
+        Health control es la aplicación que te permitirá registrar tus tomas de presión arterial, para llevar un control de tu salud. 
+        Puedes acceder a tus datos de presión arterial en cuanlquier momento y lugar, de esta manera podrás analizar tu estado 
+        de salud en tiempo real. Además, puedes descargar tus datos en pdf o pedrile a tu médico que acceda a estos a través de la aplicación.</p><br>     
 <v-row
     align="center"
     justify="space-around"
@@ -30,6 +28,11 @@
   large
   color="#FFBE5E">Regístrate como médico</v-btn>
 </v-row><br><br>
+
+<p>Si lo deseas, también puedes calcaular tu índice de masa corporal. Este dato es importante para tu salud en general y asegurarse de que 
+        los valores de presión arterial se mantendrán estables en el tiempo. En Health control, queremos cuidarte 
+        y ayudarte a que tengas el control de tu salud. 
+      </p> 
       <h3>¿Qué puedes hacer con Health control?</h3><br>
       <v-card
     class="mx-auto"
@@ -78,10 +81,10 @@ body {
   margin: auto;
   padding: 250px 100px 15px 25px;
 }
-h2 {
+h1 {
   text-align: left;
   font-family:  monospace;
-  font-size: 60px;
+  font-size: 40px;
   padding: 50px 25px 20px 25px;
   color: white;
 }

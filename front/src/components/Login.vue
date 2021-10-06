@@ -1,7 +1,8 @@
 <template>
-  <v-form>
+  <v-card>
+    <v-card-text>
     <v-text-field
-      label="Email"
+      label="Correo"
       prepend-icon="mdi-at"
       :rules="rulesEmail"
       hide-details="auto"
@@ -17,13 +18,14 @@
       type="password"
     ></v-text-field>
 
-    <v-spacer></v-spacer>
-    <div>
-      <v-btn id="boton" color="primary" v-on:click="loginFunction()"
-        >Login</v-btn
-      >
-    </div>
-  </v-form>
+    <v-alert border= "left" color= "orange" dense outlined type="error" v-model="showError">{{ error }}</v-alert> 
+    </v-card-text>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn id="boton" color="primary" v-on:click="loginFunction()">Ingresa</v-btn>
+      </v-card-actions>
+  </v-card>
+  
 </template>
 
 <script>
@@ -39,6 +41,12 @@ export default {
         (value) => !!value || "Requerido.",
         (value) => value && value.length <= 50,
       ],
+      rulesPassword: [
+        (value) => !!value || "Requerido.",
+        (value) => value && value.length <= 50,
+      ],
+      showError: false,
+      error: ""
     };
   },
   methods: {
@@ -52,15 +60,16 @@ export default {
         this.$emit("logged", undefined);
         window.location.reload();
       })
-  .catch((err) => console.log(err))     
+  .catch((err) => {
+    console.log("error", err.respuesta);
+    this.showError = true;
+    this.error = err.respuesta.data.message;
+  });
+       
     },
   },
 };
 </script>
 
 <style scoped>
-#boton {
-  margin-top: 50px;
-  float: inline-end;
-}
 </style>

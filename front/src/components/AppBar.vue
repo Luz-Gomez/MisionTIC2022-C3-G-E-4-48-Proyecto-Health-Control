@@ -26,7 +26,7 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-dialog v-model="showLogin" max-height="1000px" max-width="600px">
+    <v-dialog v-model="showLogin" max-width="600px">
       <Login v-on:logged="showLogin = false"></Login>
     </v-dialog>
   </v-app-bar>
