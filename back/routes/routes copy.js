@@ -1,11 +1,10 @@
 const express = require("express");
 const UsuariosController = require("../controllers/usuariosController");
 const PerfilUsuarioController = require("../controllers/perfilUsuarioController");
-const ConsejosController = require("../controllers/consejosController");
-const TomaPresionController = require("../controllers/tomaPresionController");
 
 //Carga de archivos
 const multer = require("multer");
+const ConsejosController = require("../controllers/consejosController");
 const storageConfig = multer.diskStorage({
     destination: (req, res, cb) => {
         cb(null, "./cargas");
@@ -24,14 +23,10 @@ router.post("/usuarios", UsuariosController.insert);
 router.post("/autenticar", UsuariosController.validarUsuario);
 
 //Rutas de perfil de usuario
-router.get("/perfilUsuario", PerfilUsuarioController.getAll);
-router.get("/perfilUsuario/:mail", PerfilUsuarioController.getBymail);
 router.post("/perfilUsuario", PerfilUsuarioController.insert);
-router.put("/perfilUsuario/:mail", PerfilUsuarioController.update);
-
-//Rutas de toma de presion
-router.get("/tomaPresion/:mail", TomaPresionController.getBymail);
-router.post("/tomaPresion", TomaPresionController.insert);
+router.get("/perfilUsuario", PerfilUsuarioController.getAll);
+router.get("perfilUsuario/:id", PerfilUsuarioController.getById);
+router.put("/perfilUsuario7:id", PerfilUsuarioController.update);
 
 //Rutas de los consejos
 router.get("/consejos", ConsejosController.getAll);
