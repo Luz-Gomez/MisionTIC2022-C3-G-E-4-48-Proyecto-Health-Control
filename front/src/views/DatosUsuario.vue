@@ -1,9 +1,20 @@
 <template>
-<body>
-  <v-form>
+  <body>
     <v-container>
       <h2>Perfil del Usuario</h2>
-      <h3>Completa la informacion de tu perfil y disfruta de nuestros servicios</h3>
+      <h3>
+        Completa la informacion de tu perfil y disfruta de nuestros servicios
+      </h3>
+      <v-row>
+        <v-col cols="10" sm="8">
+          <v-text-field
+            label="mail"
+            solo
+            hide-details="auto"
+            v-model="mail"
+          ></v-text-field>
+        </v-col>
+      </v-row>
       <v-row>
         <v-col cols="10" sm="4">
           <v-text-field
@@ -25,23 +36,20 @@
         </v-col>
       </v-row>
       <v-row justify="space-around">
-        <v-col cols="10" sm="4"> 
-          <v-date-picker 
-            v-model="picker"
-          ></v-date-picker>
+        <v-col cols="10" sm="4">
+          <v-date-picker v-model="picker"></v-date-picker>
         </v-col>
       </v-row>
-    </v-container>
-    <v-container>
+
       <h3>Los datos a continuacion son opcionales</h3>
-      <h5>
+      <h4>
         Si desea que la aplicacion calcule su IMC y Categoria de peso diligencie
         la siguiente información
-      </h5>
+      </h4>
       <v-row>
         <v-col cols="4" sm="2">
           <v-text-field
-            label="Estatura en mts"
+            label="Estatura"
             solo
             value="0.00"
             suffix="mts"
@@ -57,12 +65,30 @@
             v-model="peso"
           ></v-text-field>
         </v-col>
+        <v-col cols="4" sm="2">
+          <v-text-field
+            disabled
+            solo
+            value="00.0"
+            prefix="IMC: "
+            v-model="imc"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="4" sm="4">
+          <v-text-field
+            disabled
+            solo
+            value=""
+            prefix="Categoria Peso: "
+            v-model="categoria"
+          ></v-text-field>
+        </v-col>
       </v-row>
-      <h5>
+      <h4>
         Si desea que podamos contactarnos con usted, favor indiquenos un numero
         de celular
-      </h5>
-     <v-row>
+      </h4>
+      <v-row>
         <v-col cols="12" sm="6">
           <v-text-field
             label="Numero celular"
@@ -73,10 +99,10 @@
           ></v-text-field>
         </v-col>
       </v-row>
-      <h5>
-        Si desea que su medico pueda revisar sus datos de presion y
-        peso, indiquenos nombre y apellido
-      </h5>
+      <h4>
+        Si desea que su medico pueda revisar sus datos de presion y peso,
+        indiquenos nombre y apellido
+      </h4>
       <v-row>
         <v-col cols="10" sm="4">
           <v-text-field
@@ -95,7 +121,6 @@
             hide-details="auto"
             v-model="apeMedico"
           ></v-text-field>
- 
         </v-col>
       </v-row>
       <v-checkbox
@@ -106,7 +131,7 @@
         v-model="alerta"
         required
       ></v-checkbox>
-      <v-checkbox 
+      <v-checkbox
         :error-messages="errors"
         value="1"
         label=" Permite que sus datos de IMC y Categoria de peso sean visibles dentro de esta APP, pero no fuera de esta pagina"
@@ -114,18 +139,37 @@
         v-model="visibilidad"
         required
       ></v-checkbox>
-      <v-btn id="boton" rounded dark v-on:click="guardarUsuario()">Guardar</v-btn>
+      <v-row align="center" justify="space-around">
+        <v-btn rounded color="primary" @click="guardarUsuario()">Guardar</v-btn>
+        <v-btn rounded color="primary" @click="actualizar()">Actualizar</v-btn>
+        <br /><br />
+      </v-row>
+      <SuccessMessage
+        :message="successMessage"
+        :snackbar="successShow"
+        :close="closeSuccessDialog"
+      ></SuccessMessage>
+      <ErrorMessage
+        :message="errorMessage"
+        :snackbar="errorShow"
+        :close="closeErrorDialog"
+      ></ErrorMessage>
     </v-container>
-  </v-form>
-</body>
+  </body>
 </template>
 
 <script>
+import {
+  insertPerfil,
+  getPerfil,
+  updatePerfil,
+} from "../services/perfilUsuario.Service";
+
 export default {
   data() {
     return {
       nombre: "",
-      apellido:"",
+      apellido: "",
       fechaNacimiento: "",
       peso: "",
       estatura: "",
@@ -134,58 +178,141 @@ export default {
       apeMedico: "",
       nombreRules: [
         (value) => !!value || "Required.",
-        (value) => (value && value.length >= 5) || "Min 5 characters",
-      ],
-      fechaRules: [
-        (value) => !!value || "Required.",
-        (value) => (value && value.length == 10) || "AAAA/MM/DD",
+        (value) => (value && value.length >= 3) || "Mínimo 3 characters",
       ],
       celularRules: [(value) => (value && value.length == 10) || "#########"],
       medicoRules: [
-        (value) => (value && value.length >= 5) || "Min 5 characters",
+        (value) => (value && value.length >= 3) || "Mínimo 3 characters",
       ],
-      picker: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      picker: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+        .toISOString()
+        .substr(0, 10),
+      categoria: "",
+      imc: "",
+
+      isEdit: false,
     };
   },
-  mounted() {
-    let listaUsuarios = JSON.parse(localStorage.getItem("listaUsuarios"));
-    if(listaUsuarios != undefined){
-      this.listaUsuarios = listaUsuarios;
-          }
+  computed: {
+    calcularIMC() {
+      let indice = parseFloat(this.peso / this.estatura ** 2);
+      console.log(indice);
+      return indice;
+    },
+    calcularCategoria() {
+      let estado = "";
+      if (this.imc < 18.5) {
+        estado = "Bajo peso";
+      } else if (this.imc >= 18.5 && this.imc < 25) {
+        estado = "Peso Normal";
+      } else if (this.imc >= 25 && this.imc < 30) {
+        estado = "Sobrepeso";
+      } else if (this.imc >= 30 && this.imc < 40) {
+        estado = "Obesidad";
+      } else if (this.imc >= 40) {
+        estado = "Obesidad mórbida";
+      }
+      return estado;
+    },
+  },
+  created() {
+    console.log("tiene mail: " + this.$route.params.mail);
+    const mail = this.$route.params.mail;
+    if (mail != undefined) {
+      getPerfil(mail)
+        .then((response) => {
+          const perfilUsuario = response.data;
+          this.mail = perfilUsuario.mail;
+          this.nombre = perfilUsuario.nombre;
+          this.apellido = perfilUsuario.apellido;
+          this.picker = perfilUsuario.fechaNacimiento;
+          this.estatura = perfilUsuario.estatura;
+          this.peso = perfilUsuario.peso;
+          this.celular = perfilUsuario.celular;
+          this.nomMedico = perfilUsuario.nombreMedico;
+          this.apeMedico = perfilUsuario.apellidoMedico;
+          this.alerta = perfilUsuario.alerta;
+          this.visibilidad = perfilUsuario.visibilidad;
+          this.imc = perfilUsuario.imc;
+          this.categoriaPeso = perfilUsuario.categoriaPeso;
+
+          this.isEdit = true;
+        })
+        .catch(() => console.log("Usuario sin perfil registrado"));
+    }
   },
   methods: {
     guardarUsuario() {
-      let listaUsuarios = JSON.parse(localStorage.getItem("listaUsuarios"));
-      if(listaUsuarios == undefined){
-        listaUsuarios =[]
+      if (
+        this.mail == undefined ||
+        this.mail == "" ||
+        this.nombre == undefined ||
+        this.nombre == "" ||
+        this.apellido == undefined ||
+        this.apellido == "" ||
+        this.picker == undefined ||
+        this.picker == ""
+      ) {
+        console.log("Error");
+        return;
       }
-      const codigo = 1;
-      const usuario = {
-        codigo: codigo,
-        nombre:this.nombre,
-        apellido:this.apellido,
-        fechaNacimiento:this.picker,
-        estatura:this.estatura,
-        peso:this.peso,
-        celular:this.celular,
-        nomMedico:this.nomMedico,
-        apeMedico:this.apeMedico,
-        alerta:this.alerta,
-        visibilidad:this.visibilidad,
+      let request = null;
+      const perfilUsuario = {
+        mail: this.mail,
+        nombre: this.nombre,
+        apellido: this.apellido,
+        fechaNacimiento: this.picker,
+        estatura: this.estatura,
+        peso: this.peso,
+        celular: this.celular,
+        nombreMedico: this.nomMedico,
+        apellidoMedico: this.apeMedico,
+        alerta: this.alerta,
+        visibilidad: this.visibilidad,
+        imc: this.imc,
+        categoriaPeso: this.categoriaPeso,
       };
-      listaUsuarios.push(usuario);
-      this.nombre = "";
-      this.apellido = "";
-      this.picket = Date.now();
-      this.estatura = "";
-      this.peso = "";
-      this.celular = "";
-      this.nomMedico = "";
-      this.apeMedico = "";
-      this.alerta = "";
-      this.visibilidad = "";
 
-      localStorage.setItem("listaUsuarios", JSON.stringify(listaUsuarios));
+      console.log("Entro:", perfilUsuario);
+      request = insertPerfil(perfilUsuario);
+      console.log(request);
+      request
+        .then((response) => console.log("Sale" + response))
+        .catch(() => console.log("Error al actualizar perfil"));
+    },
+    actualizar() {
+      if (
+        this.mail == undefined ||
+        this.mail == "" ||
+        this.nombre == undefined ||
+        this.nombre == "" ||
+        this.apellido == undefined ||
+        this.apellido == "" ||
+        this.picker == undefined ||
+        this.picker == ""
+      ) {
+        console.log("Ingrese los campos obligatorios");
+        return;
+      }
+
+      const perfilUsuario = {
+        mail: this.mail,
+        nombre: this.nombre,
+        apellido: this.apellido,
+        fechaNacimiento: this.picker,
+        estatura: this.estatura,
+        peso: this.peso,
+        celular: this.celular,
+        nombreMedico: this.nomMedico,
+        apellidoMedico: this.apeMedico,
+        alerta: this.alerta,
+        visibilidad: this.visibilidad,
+        imc: this.imc,
+        categoriaPeso: this.categoriaPeso,
+      };
+      updatePerfil(this.mail, perfilUsuario)
+        .then(() => console.log("Se ha actualizado el perfil de " + this.mail))
+        .catch(() => console.log("Error al actualizar perfil"));
     },
   },
 };
@@ -195,25 +322,25 @@ export default {
 h2 {
   padding: 60px 10px 10px 10px;
   text-align: left;
+  font-size: 40px;
   font-family: monospace;
   color: white;
 }
 h3 {
   padding: 10px 10px 10px 10px;
   text-align: left;
+  font-size: 25px;
   font-family: monospace;
   color: white;
 }
-h5 {
+h4 {
   padding: 10px 10px 10px 10px;
   text-align: left;
+  font-size: 20px;
   font-family: monospace;
   color: white;
 }
 .v-picker__title {
   background-color: #6590fc;
-}
-#boton {
-  float: left
 }
 </style>
