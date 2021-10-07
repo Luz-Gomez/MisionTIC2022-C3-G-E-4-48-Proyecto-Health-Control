@@ -1,9 +1,20 @@
 <template>
-<body>
-  <v-form>
+  <body>
     <v-container>
       <h2>Perfil del Médico</h2>
-      <h3>Completa la informacion de tu perfil y disfruta de nuestros servicios</h3>
+      <h3>
+        Completa la informacion de tu perfil y disfruta de nuestros servicios
+      </h3>
+      <v-row>
+        <v-col cols="10" sm="8">
+          <v-text-field
+            label="mail"
+            solo
+            hide-details="auto"
+            v-model="mail"
+          ></v-text-field>
+        </v-col>
+      </v-row>
       <v-row>
         <v-col cols="10" sm="4">
           <v-text-field
@@ -24,17 +35,8 @@
           ></v-text-field>
         </v-col>
       </v-row>
-      <v-row justify="space-around">
-        <v-col cols="10" sm="4"> 
-          <v-date-picker 
-            v-model="picker"
-          ></v-date-picker>
-        </v-col>
-      </v-row>
-       <h5>
-        Ingresa tu número de celular, para podernos comunicar contigo.
-      </h5>
-     <v-row>
+      <h4>Ingresa tu número de celular, para podernos comunicar contigo.</h4>
+      <v-row>
         <v-col cols="12" sm="6">
           <v-text-field
             label="Numero celular"
@@ -45,28 +47,26 @@
           ></v-text-field>
         </v-col>
       </v-row>
-       <h5>
-        Ingresa tus credenciales profesionales:
-      </h5>
-     <v-row>
+      <h4>Ingresa tus credenciales profesionales:</h4>
+      <v-row>
         <v-col cols="12" sm="6">
           <v-text-field
             label="Institución donde labora"
             solo
-            :rules="celularRules"
+            :rules="institucionRules"
             hide-details="auto"
-            v-model="celular"
+            v-model="institucion"
           ></v-text-field>
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="12" sm="6">
           <v-text-field
-            label="Registro especial de acreditadores de salud e su insitución"
+            label="Registro especial de acreditadores de salud y su insitución"
             solo
-            :rules="celularRules"
+            :rules="regInstitucionRules"
             hide-details="auto"
-            v-model="celular"
+            v-model="regInstitucion"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -75,62 +75,14 @@
           <v-text-field
             label="Tarjeta profesional como médico"
             solo
-            :rules="celularRules"
+            :rules="tarjetaProfRules"
             hide-details="auto"
-            v-model="celular"
+            v-model="tarjetaProf"
           ></v-text-field>
         </v-col>
       </v-row>
     </v-container>
     <v-container>
-      <h3>Los datos a continuacion son opcionales</h3>
-      <h5>
-        Si desea que la aplicacion calcule su IMC y Categoria de peso diligencie
-        la siguiente información
-      </h5>
-      <v-row>
-        <v-col cols="4" sm="2">
-          <v-text-field
-            label="Estatura en mts"
-            solo
-            value="0.00"
-            suffix="mts"
-            v-model="estatura"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="4" sm="2">
-          <v-text-field
-            label="Peso"
-            solo
-            value="00.0"
-            suffix="Kgr"
-            v-model="peso"
-          ></v-text-field>
-        </v-col>
-      </v-row>
-      <h5>
-        Si quieres agregar un paciente, indícanos su nombre y apellido.
-      </h5>
-      <v-row>
-        <v-col cols="10" sm="4">
-          <v-text-field
-            label="Nombre del paciente"
-            solo
-            :rules="medicoRulers"
-            hide-details="auto"
-            v-model="nomMedico"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="10" sm="4">
-          <v-text-field
-            label="Apellido del paciente"
-            solo
-            :rules="medicoRulers"
-            hide-details="auto"
-            v-model="apeMedico"
-          ></v-text-field>
-        </v-col>
-      </v-row>
       <v-checkbox
         :error-messages="errors"
         value="1"
@@ -139,7 +91,7 @@
         v-model="acepta"
         required
       ></v-checkbox>
-      <v-checkbox 
+      <v-checkbox
         :error-messages="errors"
         value="1"
         label="Quieres recibir notificaciones en tu correo sobre la actividad de tus pacientes"
@@ -147,89 +99,143 @@
         v-model="alerta"
         required
       ></v-checkbox>
-      <v-btn id="boton" rounded dark v-on:click="guardarUsuario()">Guardar</v-btn>
+      <v-row align="center" justify="space-around">
+        <v-btn rounded color="primary" @click="guardarMedico()">Guardar</v-btn>
+        <br /><br />
+      </v-row>
     </v-container>
-  </v-form>
-</body>
+  </body>
 </template>
 
 <script>
+import {
+  insertMedico,
+  getMedico,
+  updateMedico,
+} from "../services/perfilMedico.Service";
+
 export default {
   data() {
     return {
       nombre: "",
-      apellido:"",
-      fechaNacimiento: "",
+      apellido: "",
       celular: "",
       institucion: "",
-      regInstitución: "",
+      regInstitucion: "",
       tarjetaProf: "",
       nombreRules: [
-        (value) => !!value || "Required.",
-        (value) => (value && value.length >= 5) || "Min 5 characters",
+        (value) => !!value || "Requerido",
+        (value) => (value && value.length >= 3) || "Min 3 characters",
       ],
       apellidoRules: [
-        (value) => !!value || "Required.",
-        (value) => (value && value.length >= 5) || "Min 5 characters",
+        (value) => !!value || "Requerido",
+        (value) => (value && value.length >= 3) || "Min 3 characters",
       ],
       fechaRules: [
-        (value) => !!value || "Required.",
+        (value) => !!value || "Requerido",
         (value) => (value && value.length == 10) || "AAAA/MM/DD",
       ],
       celularRules: [
-        (value) => !!value || "Required.",
-        (value) => (value && value.length == 10) || "#########"],
+        (value) => !!value || "Requerido",
+        (value) => (value && value.length == 10) || "##########",
+      ],
       institucionRules: [
-        (value) => !!value || "Required.",
+        (value) => !!value || "Requerido",
         (value) => (value && value.length >= 5) || "Min 5 characters",
       ],
       regInstitucionRules: [
-        (value) => !!value || "Required.",
+        (value) => !!value || "Requerido",
         (value) => (value && value.length >= 5) || "Min 5 characters",
       ],
       tarjetaProfRules: [
-        (value) => !!value || "Required.",
+        (value) => !!value || "Requerido",
         (value) => (value && value.length >= 5) || "Min 5 characters",
       ],
-      picker: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     };
   },
-  mounted() {
-    let listaUsuarios = JSON.parse(localStorage.getItem("listaUsuarios"));
-    if(listaUsuarios != undefined){
-      this.listaUsuarios = listaUsuarios;
-          }
+
+  created() {
+    console.log("Tiene mail: " + this.$route.params.mail);
+    const mail = this.$route.params.mail;
+    if (mail != undefined) {
+      getMedico(mail)
+        .then((response) => {
+          const perfilMedico = response.data;
+          this.mail = perfilMedico.mail;
+          this.nombre = perfilMedico.nombre;
+          this.apellido = perfilMedico.apellido;
+          this.celular = perfilMedico.celular;
+          this.institucion = perfilMedico.institucion;
+          this.regInstitucion = perfilMedico.regInstitucion;
+          this.tarjetaProf = perfilMedico.tarjetaProf;
+          this.acepta = perfilMedico.acepta;
+          this.alerta = perfilMedico.alerta;
+
+          this.isEdit = true;
+        })
+        .catch(() => console.log("Medico sin perfil registrado"));
+    }
   },
   methods: {
-    guardarUsuario() {
-      let listaUsuarios = JSON.parse(localStorage.getItem("listaUsuarios"));
-      if(listaUsuarios == undefined){
-        listaUsuarios =[]
+    guardarMedico() {
+      if (
+        this.mail == undefined ||
+        this.mail == "" ||
+        this.nombre == undefined ||
+        this.nombre == "" ||
+        this.apellido == undefined ||
+        this.apellido == ""
+      ) {
+        console.log("Error");
+        return;
       }
-      const codigo = 1;
-      const usuario = {
-        codigo: codigo,
-        nombre:this.nombre,
-        apellido:this.apellido,
-        fechaNacimiento:this.picker,
-        celular:this.celular,
-        institucion:this.institucion,
-        regInstitución:this.regInstitución,
-        tarjetaProf:this.tarjetaProf,
-        acepta:this.acepta,
-        alerta:this.alerta,
+      let request = null;
+      const perfilMedico = {
+        mail: this.mail,
+        nombre: this.nombre,
+        apellido: this.apellido,
+        celular: this.celular,
+        institucion: this.institucion,
+        regInstitucion: this.regInstitucion,
+        tarjetaProf: this.tarjetaProf,
+        acepta: this.acepta,
+        alerta: this.alerta,
       };
-      listaUsuarios.push(usuario);
-      this.nombre = "";
-      this.apellido = "";
-      this.picket = Date.now();
-      this.celular = "";
-      this.institucion = "";
-      this.regInstitución = "";
-      this.acepta = "";
-      this.alerta = "";
 
-      localStorage.setItem("listaUsuarios", JSON.stringify(listaUsuarios));
+      console.log("Entro:", perfilMedico);
+      request = insertMedico(perfilMedico);
+      console.log(request);
+      request
+        .then((response) => console.log("Sale" + response))
+        .catch(() => console.log("Error al actualizar medico"));
+    },
+    actualizar() {
+      if (
+        this.mail == undefined ||
+        this.mail == "" ||
+        this.nombre == undefined ||
+        this.nombre == "" ||
+        this.apellido == undefined ||
+        this.apellido == ""
+      ) {
+        console.log("Ingrese los campos obligatorios");
+        return;
+      }
+
+      const perfilMedico = {
+        mail: this.mail,
+        nombre: this.nombre,
+        apellido: this.apellido,
+        celular: this.celular,
+        institucion: this.institucion,
+        regInstitucion: this.regInstitucion,
+        tarjetaProf: this.tarjetaProf,
+        acepta: this.acepta,
+        alerta: this.alerta,
+      };
+      updateMedico(this.mail, perfilMedico)
+        .then(() => console.log("Se ha actualizado el perfil de " + this.mail))
+        .catch(() => console.log("Error al actualizar medico"));
     },
   },
 };
@@ -239,25 +245,22 @@ export default {
 h2 {
   padding: 60px 10px 10px 10px;
   text-align: left;
+  font-size: 40px;
   font-family: monospace;
   color: white;
 }
 h3 {
   padding: 10px 10px 10px 10px;
   text-align: left;
+  font-size: 25px;
   font-family: monospace;
   color: white;
 }
-h5 {
+h4 {
   padding: 10px 10px 10px 10px;
   text-align: left;
+  font-size: 20px;
   font-family: monospace;
   color: white;
-}
-.v-picker__title {
-  background-color: #6590fc;
-}
-#boton {
-  float: left
 }
 </style>
