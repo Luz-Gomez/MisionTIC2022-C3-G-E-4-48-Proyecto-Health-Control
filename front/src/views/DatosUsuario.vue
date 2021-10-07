@@ -35,9 +35,10 @@
           ></v-text-field>
         </v-col>
       </v-row>
-      <v-row justify="space-around">
-        <v-col cols="10" sm="4">
-          <v-date-picker v-model="picker"></v-date-picker>
+      <v-row>
+        <v-col cols="10" sm="8">
+          <v-date-picker v-model="picker" locale="es-CO" full-width>
+          </v-date-picker>
         </v-col>
       </v-row>
 
@@ -47,40 +48,42 @@
         la siguiente información
       </h4>
       <v-row>
-        <v-col cols="4" sm="2">
+        <v-col cols="2" sm="2">
+          <v-text>Estatura</v-text>
           <v-text-field
-            label="Estatura"
+            label=""
             solo
             value="0.00"
             suffix="mts"
             v-model="estatura"
           ></v-text-field>
         </v-col>
-        <v-col cols="4" sm="2">
+        <v-col cols="2" sm="2">
+          <v-text>Peso</v-text>
           <v-text-field
-            label="Peso"
+            label=""
             solo
             value="00.0"
             suffix="Kgr"
             v-model="peso"
           ></v-text-field>
         </v-col>
-        <v-col cols="4" sm="2">
+        <v-col cols="2" sm="1">
+          <v-text>IMC</v-text>
           <v-text-field
             disabled
             solo
             value="00.0"
-            prefix="IMC: "
-            v-model="imc"
+            v-model="calcularIMC"
           ></v-text-field>
         </v-col>
-        <v-col cols="4" sm="4">
+        <v-col cols="2" sm="3">
+          <v-text>Categoria de Peso</v-text>
           <v-text-field
             disabled
             solo
             value=""
-            prefix="Categoria Peso: "
-            v-model="categoria"
+            v-model="calcularCategoria"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -144,16 +147,6 @@
         <v-btn rounded color="primary" @click="actualizar()">Actualizar</v-btn>
         <br /><br />
       </v-row>
-      <SuccessMessage
-        :message="successMessage"
-        :snackbar="successShow"
-        :close="closeSuccessDialog"
-      ></SuccessMessage>
-      <ErrorMessage
-        :message="errorMessage"
-        :snackbar="errorShow"
-        :close="closeErrorDialog"
-      ></ErrorMessage>
     </v-container>
   </body>
 </template>
@@ -176,6 +169,9 @@ export default {
       celular: "",
       nomMedico: "",
       apeMedico: "",
+      categoria: "",
+      imc: "",
+
       nombreRules: [
         (value) => !!value || "Required.",
         (value) => (value && value.length >= 3) || "Mínimo 3 characters",
@@ -187,36 +183,36 @@ export default {
       picker: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
         .toISOString()
         .substr(0, 10),
-      categoria: "",
-      imc: "",
 
       isEdit: false,
     };
   },
   computed: {
-    calcularIMC() {
+    calcularIMC: function () {
       let indice = parseFloat(this.peso / this.estatura ** 2);
       console.log(indice);
       return indice;
     },
-    calcularCategoria() {
+    calcularCategoria: function () {
+      let indice = parseFloat(this.peso / this.estatura ** 2);
       let estado = "";
-      if (this.imc < 18.5) {
+      if (indice < 18.5) {
         estado = "Bajo peso";
-      } else if (this.imc >= 18.5 && this.imc < 25) {
+      } else if (indice >= 18.5 && indice < 25) {
         estado = "Peso Normal";
-      } else if (this.imc >= 25 && this.imc < 30) {
+      } else if (indice >= 25 && indice < 30) {
         estado = "Sobrepeso";
-      } else if (this.imc >= 30 && this.imc < 40) {
+      } else if (indice >= 30 && indice < 40) {
         estado = "Obesidad";
-      } else if (this.imc >= 40) {
+      } else if (indice >= 40) {
         estado = "Obesidad mórbida";
       }
+      console.log(estado + " " + indice);
       return estado;
     },
   },
   created() {
-    console.log("tiene mail: " + this.$route.params.mail);
+    console.log("Tiene mail: " + this.$route.params.mail);
     const mail = this.$route.params.mail;
     if (mail != undefined) {
       getPerfil(mail)
@@ -233,12 +229,12 @@ export default {
           this.apeMedico = perfilUsuario.apellidoMedico;
           this.alerta = perfilUsuario.alerta;
           this.visibilidad = perfilUsuario.visibilidad;
-          this.imc = perfilUsuario.imc;
+          this.calcularIMC = perfilUsuario.imc;
           this.categoriaPeso = perfilUsuario.categoriaPeso;
 
           this.isEdit = true;
         })
-        .catch(() => console.log("Usuario sin perfil registrado"));
+        .catch((err) => console.error(err));
     }
   },
   methods: {
@@ -253,7 +249,7 @@ export default {
         this.picker == undefined ||
         this.picker == ""
       ) {
-        console.log("Error");
+        console.error("Registre Datos obligatorios");
         return;
       }
       let request = null;
@@ -269,16 +265,14 @@ export default {
         apellidoMedico: this.apeMedico,
         alerta: this.alerta,
         visibilidad: this.visibilidad,
-        imc: this.imc,
-        categoriaPeso: this.categoriaPeso,
+        imc: this.calcularIMC,
+        categoriaPeso: this.calcularCategoria,
       };
 
-      console.log("Entro:", perfilUsuario);
       request = insertPerfil(perfilUsuario);
-      console.log(request);
       request
-        .then((response) => console.log("Sale" + response))
-        .catch(() => console.log("Error al actualizar perfil"));
+        .then((response) => console.log(response))
+        .catch((err) => console.error(err));
     },
     actualizar() {
       if (
@@ -312,7 +306,7 @@ export default {
       };
       updatePerfil(this.mail, perfilUsuario)
         .then(() => console.log("Se ha actualizado el perfil de " + this.mail))
-        .catch(() => console.log("Error al actualizar perfil"));
+        .catch((err) => console.error(err));
     },
   },
 };

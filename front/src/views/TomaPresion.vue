@@ -4,53 +4,42 @@
       <h2>Toma Presión Arterial</h2>
       <h3>Por favor registre sus tomas de presión</h3>
       <v-row>
-        <v-col cols="8">
+        <v-col cols="12" sm="6">
           <v-text>Mail</v-text>
           <v-text-field label="" solo requerido v-model="mail"></v-text-field>
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="2">
+        <v-col cols="2" sm="2">
           <v-text>Sístole</v-text>
           <v-text-field
-            label="000"
             solo
             :rules="pasRules"
-            value="000"
             suffix="mmHg"
             requerido
             v-model="pas"
           ></v-text-field>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="2" sm="2">
           <v-text>Diástole</v-text>
           <v-text-field
-            label="000"
             solo
             :rules="padRules"
-            value="000"
             suffix="mmHg"
             v-model="pad"
           ></v-text-field>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="2" sm="3">
+          <v-text>Presion Arterial</v-text>
+          <v-text-field disabled solo v-model="calcularPresion"></v-text-field>
+        </v-col>
+        <v-col cols="2" sm="2">
           <v-text>Pulsaciones</v-text>
           <v-text-field
-            label="000"
             solo
             :rules="pulsoRules"
-            value="000"
             suffix="lpm"
             v-model="pulso"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="3">
-          <v-text>Presión Arterial</v-text>
-          <v-text-field
-            label="Normal"
-            solo
-            disabled
-            v-model="arterial"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -86,6 +75,10 @@ import { insertPresion, getPresion } from "../services/tomaPresion.Service";
 export default {
   data() {
     return {
+      pas: "",
+      pad: "",
+      pulso: "",
+      presion: "",
       pasRules: [
         (value) => !!value || "Required.",
         (value) =>
@@ -108,42 +101,33 @@ export default {
           sortable: false,
           value: "fecha",
         },
-        { text: "Sístole", value: "pas" },
-        { text: "Diástole", value: "pad" },
-        { text: "Pulsaciones", value: "pulso" },
-        { text: "Presión Arterial", value: "Normal" },
+        { text: "Sístole", value: this.pas },
+        { text: "Diástole", value: this.pad },
+        { text: "Pulsaciones", value: this.pulso },
+        { text: "Presión Arterial", value: this.arterial },
       ],
     };
   },
   computed: {
-    calcularPresionArterial() {
+    calcularPresion: function () {
+      let tpas = parseFloat(this.pas);
+      let tpad = parseFloat(this.pad);
       let tomaPresion = "";
-      if (this.pas <= 90 && this.pad <= 60) {
+      if (tpas < tpad || tpas - tpad < 15) {
+        tomaPresion = "Valores incorrectos";
+        return tomaPresion;
+      }
+      if (tpas <= 90 && tpad <= 60) {
         tomaPresion = "Hipotensión";
-      } else if (
-        this.pas > 90 &&
-        this.pas < 120 &&
-        this.pad > 60 &&
-        this.pas < 80
-      ) {
+      } else if (tpas > 90 && tpas < 120 && tpad > 60 && tpad < 80) {
         tomaPresion = "Normal";
-      } else if (this.pas > 119 && this.pas < 130 && this.pad < 80) {
+      } else if (tpas > 119 && tpas < 130 && tpad < 80) {
         tomaPresion = "Elevada";
-      } else if (
-        this.pas > 129 &&
-        this.pas < 140 &&
-        this.pad > 79 &&
-        this.pas < 90
-      ) {
+      } else if ((tpas > 129 && tpas < 140) || (tpad > 79 && tpad < 90)) {
         tomaPresion = "Etapa 1 de Hipertensión";
-      } else if (
-        this.pas > 139 &&
-        this.pas < 181 &&
-        this.pad > 99 &&
-        this.pas < 121
-      ) {
+      } else if ((tpas > 139 && tpas < 181) || (tpad > 99 && tpas < 121)) {
         tomaPresion = "Etapa 2 de Hipertensión";
-      } else if (this.pas > 180 && this.pad > 120) {
+      } else if (tpas > 180 && tpad > 120) {
         tomaPresion = "Crisis Hipertensiva";
       }
       return tomaPresion;
@@ -160,7 +144,7 @@ export default {
           this.pas = tomaPresion.sistole;
           this.pad = tomaPresion.diastole;
           this.pulso = tomaPresion.pulso;
-          this.arterial = tomaPresion.presion;
+          this.calcularPresion = tomaPresion.presion;
         })
         .catch(() => console.log("Usuario sin registro de presiones"));
     }
@@ -187,6 +171,7 @@ export default {
         sistole: this.pas,
         diastole: this.pad,
         pulso: this.pulso,
+        presion: this.calcularPresion,
       };
       console.log("Entro:", tomaPresion);
       request = insertPresion(tomaPresion);
