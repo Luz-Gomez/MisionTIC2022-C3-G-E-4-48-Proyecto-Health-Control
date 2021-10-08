@@ -4,18 +4,18 @@
     <v-text-field
       label="Correo"
       prepend-icon="mdi-at"
-      :rules="rulesEmail"
+      :rules="rulesMail"
       hide-details="auto"
-      v-model="email"
+      v-model="mail"
     ></v-text-field>
 
     <v-text-field
       label="Contraseña"
       prepend-icon="mdi-lock"
-      :rules="rulesPassword"
+      :rules="rulesContraseña"
       hide-details="auto"
-      v-model="password"
-      type="password"
+      v-model="contraseña"
+      type="contraseña"
     ></v-text-field>
 
     <v-alert border= "left" color= "orange" dense outlined type="error" v-model="showError">{{ error }}</v-alert> 
@@ -34,14 +34,14 @@ import {validarUsuario} from "../services/Login.Service";
 export default {
   data() {
     return {
-      email: "",
+      mail: "",
       password: "",
       reg: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
-      rulesEmail: [
+      rulesMail: [
         (value) => !!value || "Requerido.",
         (value) => value && value.length <= 50,
       ],
-      rulesPassword: [
+      rulesContraseña: [
         (value) => !!value || "Requerido.",
         (value) => value && value.length <= 50,
       ],
