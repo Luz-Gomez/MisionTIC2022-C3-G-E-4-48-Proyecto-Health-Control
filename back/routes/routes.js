@@ -12,7 +12,7 @@ const storageConfig = multer.diskStorage({
         cb(null, "./cargas");
     },
     filename: (req, res, cb) => {
-        cb(null, file.filename+"_"+Date.now()+"_"+file.originalname);
+        cb(null, file.filename + "_" + Date.now() + "_" + file.originalname);
     }
 });
 
