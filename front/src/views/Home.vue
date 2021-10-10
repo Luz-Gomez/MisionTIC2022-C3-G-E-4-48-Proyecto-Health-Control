@@ -34,20 +34,28 @@
                           <v-text-field
                             label="Email"
                             name="Email"
+                            :rules="rulesEmail"
                             prepend-icon="mdi-at"
                             type="text"
                             color="#65B3FC"
+                            v-model="mail"
                           />
 
                           <v-text-field
                             id="password"
-                            label="Password"
+                            label="Contraseña"
                             name="password"
+                            :rules="rulesPassword"
+                            :type="showPassword ? 'text' : 'password'"
                             prepend-icon="mdi-lock"
-                            type="password"
                             color="#65B3FC"
+                            v-model="password"
+                            @click:append="showPassword = !showPassword"
                           />
                         </v-form>
+                        <v-alert border="left" color="red lighten-2" dark v-model="showError">
+                          {{ error }}
+                        </v-alert>
                       </v-card-text>
                       <div class="text-center">
                         <v-card-actions>
@@ -158,6 +166,7 @@ p {
 
 <script>
 import {validarUsuario} from "../services/Login.Service";
+
 export default {
   data: () => ({
     step: 1,
@@ -192,9 +201,11 @@ export default {
         window.location.reload();
       })
   .catch((err) => {
-    console.log("error", err.respuesta);
     this.showError = true;
     this.error = err.respuesta.data.message;
+    setInterval(() => {
+      this.showError = false;
+    }, 3000);
   });
        
     },
