@@ -14,12 +14,16 @@
         src="../assets/imagenes/logoHealthControl.png"
       ></v-img>
 
-      <p>La aplicación que te permitirá registrar tus tomas de presión, así como llevar un control periódico sobre tus registros. Puedes acceder a tus 
-        registros en todo momento y lugar, así como obtenerlos en formato pdf o directamente en tu correo. En health control, queremos ayudarte 
-        a cuidar tu salud. Únete a la comunidad Health control y disfruta de nuestros servicios.
+      <p>
+        La aplicación que te permitirá registrar tus tomas de presión, así como
+        llevar un control periódico sobre tus registros. Puedes acceder a tus
+        registros en todo momento y lugar, así como obtenerlos en formato pdf o
+        directamente en tu correo. En health control, queremos ayudarte a cuidar
+        tu salud. Únete a la comunidad Health control y disfruta de nuestros
+        servicios.
       </p>
 
-       <v-container class="fill-height" fluid>
+      <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="8">
             <v-card class="elevation-12">
@@ -28,13 +32,17 @@
                   <v-row>
                     <v-col cols="12" md="8">
                       <v-card-text class="mt-12">
-                        <h1 class="text-center display-2 primary--text">Ingresa a tu perfil Health control</h1>
-                        <h4 class="text-center mt-4 primary--text">Ingresa el email con el que te registraste</h4>
+                        <h1 class="text-center display-2 primary--text">
+                          Ingresa a tu perfil Health control
+                        </h1>
+                        <h4 class="text-center mt-4 primary--text">
+                          Ingresa el email con el que te registraste
+                        </h4>
                         <v-form>
                           <v-text-field
-                            label="Email"
-                            name="Email"
-                            :rules="rulesEmail"
+                            label="Correo electrónico"
+                            name="mail"
+                            :rules="rulesMail"
                             prepend-icon="mdi-at"
                             type="text"
                             color="#65B3FC"
@@ -42,37 +50,58 @@
                           />
 
                           <v-text-field
-                            id="password"
+                            id="Password"
                             label="Contraseña"
-                            name="password"
-                            :rules="rulesPassword"
+                            name="contraseña"
+                            :rules="rulesContraseña"
                             :type="showPassword ? 'text' : 'password'"
                             prepend-icon="mdi-lock"
                             color="#65B3FC"
-                            v-model="password"
+                            v-model="contraseña"
                             @click:append="showPassword = !showPassword"
                           />
                         </v-form>
-                        <v-alert border="left" color="red lighten-2" dark v-model="showError">
+                        <v-alert
+                          dense
+                          outlined
+                          border="left"
+                          type="error"
+                          v-model="showError"
+                        >
                           {{ error }}
                         </v-alert>
                       </v-card-text>
                       <div class="text-center">
                         <v-card-actions>
                           <v-spacer></v-spacer>
-                        <v-btn rounded color="#FFBE5E" dark v-on:click="loginFunction()">Ingresa</v-btn>
+                          <v-btn
+                            rounded
+                            color="#FFBE5E"
+                            dark
+                            v-on:click="loginFunction()"
+                            >Ingresa</v-btn
+                          >
                         </v-card-actions>
                       </div>
                     </v-col>
                     <v-col cols="12" md="4" class="teal primary">
                       <v-card-text class="white--text mt-12">
-                        <h1 class="text-center display-1">¿No tienes cuenta?</h1>
-                        <h5
-                          class="text-center"
-                        >Ingresa tu información personal para empezar a cuidarte con nosotros</h5>
+                        <h1 class="text-center display-1">
+                          ¿No tienes cuenta?
+                        </h1>
+                        <h5 class="text-center">
+                          Ingresa tu información personal para empezar a
+                          cuidarte con nosotros
+                        </h5>
                       </v-card-text>
                       <div class="text-center">
-                        <v-btn rounded color="#FFBE5E" dark @click="step++">Regístrate</v-btn>
+                        <v-btn
+                          rounded
+                          color="#FFBE5E"
+                          dark
+                          @click="step++"
+                          >Regístrate</v-btn
+                        >
                       </div>
                     </v-col>
                   </v-row>
@@ -81,32 +110,47 @@
                   <v-row class="fill-height">
                     <v-col cols="12" md="4" class="teal primary">
                       <v-card-text class="white--text mt-12">
-                        <h1 class="text-center display-1">Bienvenido de vuelta!</h1>
-                        <h5
-                          class="text-center"
-                        >Para acceder a nuestros servicios, por favor ingresa a tu cuenta</h5>
+                        <h1 class="text-center display-1">
+                          Bienvenido de vuelta!
+                        </h1>
+                        <h5 class="text-center">
+                          Para acceder a nuestros servicios, por favor ingresa a
+                          tu cuenta
+                        </h5>
                       </v-card-text>
                       <div class="text-center">
-                        <v-btn rounded color="#FFBE5E" dark @click="step--">Ingresar</v-btn>
+                        <v-btn rounded color="#FFBE5E" dark @click="step--"
+                          >Ingresar</v-btn
+                        >
                       </div>
                     </v-col>
 
                     <v-col cols="12" md="8">
                       <v-card-text class="mt-12">
-                        <h1 class="text-center display-2 primary--text">Crea tu cuenta</h1>
-                        
-                        <h4 class="text-center mt-4 primary--text">Agrega tu mejor correo para registrarte</h4>
+                        <h1 class="text-center display-2 primary--text">
+                          Crea tu cuenta
+                        </h1>
+
+                        <h4 class="text-center mt-4 primary--text">
+                          Selecciona tu perfil de usuario
+                        </h4>
                         <v-form>
+                          <v-row>
+                            <v-col cols="12">
+                              <v-combobox
+                                v-model="select"
+                                :items="items"
+                                label="perfil"
+                                name="tipo"
+                                outlined
+                                dense
+                              ></v-combobox>
+                            </v-col>
+                          </v-row>
                           <v-text-field
-                            label="Name"
-                            name="Name"
-                            prepend-icon="mdi-account"
-                            type="text"
-                            color="#65B3FC"
-                          />
-                          <v-text-field
-                            label="Email"
-                            name="Email"
+                            label="Correo"
+                            name="mail"
+                            :rules="rulesMail"
                             prepend-icon="mdi-at"
                             type="text"
                             color="#65B3FC"
@@ -114,16 +158,26 @@
 
                           <v-text-field
                             id="password"
-                            label="Password"
-                            name="password"
+                            label="Contraseña"
+                            name="contraseña"
+                            :rules="rulesContraseña"
                             prepend-icon="mdi-lock"
                             type="password"
                             color="#65B3FC"
                           />
                         </v-form>
+                        <v-alert
+                          dense
+                          outlined
+                          border="left"
+                          type="error"
+                          v-model="showError"
+                        >
+                          {{ error }}
+                        </v-alert>
                       </v-card-text>
                       <div class="text-center mt-n5">
-                        <v-btn rounded color="#FFBE5E" dark>Regístrate</v-btn>
+                        <v-btn rounded color="#FFBE5E" dark v-on:click="registerFunction()">Regístrate</v-btn>
                       </div>
                     </v-col>
                   </v-row>
@@ -133,7 +187,7 @@
           </v-col>
         </v-row>
       </v-container>
-        </body>
+    </body>
   </div>
 </template>
 
@@ -149,7 +203,7 @@ body {
 }
 h1 {
   text-align: left;
-  font-family:  monospace;
+  font-family: monospace;
   font-size: 30px;
   padding: 50px 25px 20px 25px;
   color: white;
@@ -165,14 +219,15 @@ p {
 </style>
 
 <script>
-import {validarUsuario} from "../services/Login.Service";
+import { validarUsuario } from "../services/Login.Service";
+import { registrarUsuario } from "../services/register.Service";
 
 export default {
-  data: () => ({
-    step: 1,
-    return: {
+   data() {  
+    return {
+      step: 1,
       mail: "",
-      password: "",
+      contraseña: "",
       reg: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
       rulesMail: [
         (value) => !!value || "Requerido.",
@@ -183,31 +238,41 @@ export default {
         (value) => value && value.length <= 50,
       ],
       showError: false,
-      error: ""
-    },
-  }),
-  props: {
-    source: String
+      error: "Por favor, ingresa tus datos para ingresar",
+      select: ['Usuario'],
+      items: ['Usuario', 'Médico'],
+    };
   },
+
   methods: {
     loginFunction() {
-
       validarUsuario(this.mail, this.contraseña)
-      .then((respuesta) => {
-        const usuario = respuesta.data;
-        sessionStorage.setItem("mail", usuario.mail);
-        sessionStorage.setItem("tipo", usuario.tipo);
-        this.$emit("logged", undefined);
-        window.location.reload();
-      })
-  .catch((err) => {
-    this.showError = true;
-    this.error = err.respuesta.data.message;
-    setInterval(() => {
-      this.showError = false;
-    }, 3000);
-  });
-       
+        .then((respuesta) => {
+          const usuario = respuesta.data;
+          sessionStorage.setItem("mail", usuario.mail);
+          sessionStorage.setItem("tipo", usuario.tipo);
+          this.$emit("logged", undefined);
+          window.location.reload();
+        })
+        .catch((err) => {
+          this.showError = true;
+          this.error = err.respuesta.data.message;
+          setInterval(() => {
+            this.showError = false;
+          }, 3000);
+        });
+    },
+    registerFunction() {
+      registrarUsuario(this.tipo, this.mail, this.contraseña)
+      if (
+          this.mail == undefined || this.mail == "" ||
+          this.contraseña == undefined || this.contraseña == ""
+       ) {
+        console.error("Ingresa tus datos para registrarte")
+        return;
+      } 
+      registrarUsuario.then((repuesta) => console.log(repuesta))
+      .catch((err) => console.error(err))
     },
   },
 };
