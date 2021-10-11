@@ -29,6 +29,11 @@ const routes = [
     path: '/TomaPresion',
     name: 'TomaPresion',
     component: () => import('../views/TomaPresion.vue')
+  },
+  {
+    path: '/ConsultaTomaPresion',
+    name: 'ConsultaTomaPresion',
+    component: () => import('../views/ConsultaTomaPresion.vue')
   }
 ]
 

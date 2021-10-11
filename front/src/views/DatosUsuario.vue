@@ -8,9 +8,11 @@
       <v-row>
         <v-col cols="10" sm="8">
           <v-text-field
-            label="mail"
-            solo
+            label="Mail"
+            filled
             hide-details="auto"
+            background-color="white"
+            disabled
             v-model="mail"
           ></v-text-field>
         </v-col>
@@ -19,18 +21,20 @@
         <v-col cols="10" sm="4">
           <v-text-field
             label="Nombre"
-            solo
-            :rules="nombreRules"
+            filled
             hide-details="auto"
+            background-color="white"
+            :rules="nombreRules"
             v-model="nombre"
           ></v-text-field>
         </v-col>
         <v-col cols="10" sm="4">
           <v-text-field
             label="Apellido"
-            solo
-            :rules="nombreRules"
+            filled
             hide-details="auto"
+            background-color="white"
+            :rules="nombreRules"
             v-model="apellido"
           ></v-text-field>
         </v-col>
@@ -51,7 +55,6 @@
         <v-col cols="2" sm="2">
           <v-text>Estatura</v-text>
           <v-text-field
-            label=""
             solo
             value="0.00"
             suffix="mts"
@@ -61,7 +64,6 @@
         <v-col cols="2" sm="2">
           <v-text>Peso</v-text>
           <v-text-field
-            label=""
             solo
             value="00.0"
             suffix="Kgr"
@@ -73,7 +75,7 @@
           <v-text-field
             disabled
             solo
-            value="00.0"
+            label=""
             v-model="calcularIMC"
           ></v-text-field>
         </v-col>
@@ -82,7 +84,7 @@
           <v-text-field
             disabled
             solo
-            value=""
+            label=""
             v-model="calcularCategoria"
           ></v-text-field>
         </v-col>
@@ -95,9 +97,10 @@
         <v-col cols="12" sm="6">
           <v-text-field
             label="Numero celular"
-            solo
-            :rules="celularRules"
+            filled
             hide-details="auto"
+            background-color="white"
+            :rules="celularRules"
             v-model="celular"
           ></v-text-field>
         </v-col>
@@ -110,33 +113,31 @@
         <v-col cols="10" sm="4">
           <v-text-field
             label="Nombre Medico tratante"
-            solo
-            :rules="medicoRulers"
+            filled
             hide-details="auto"
+            background-color="white"
+            :rules="medicoRules"
             v-model="nomMedico"
           ></v-text-field>
         </v-col>
         <v-col cols="10" sm="4">
           <v-text-field
             label="Apellido Medico tratante"
-            solo
-            :rules="medicoRulers"
+            filled
             hide-details="auto"
+            background-color="white"
+            :rules="medicoRules"
             v-model="apeMedico"
           ></v-text-field>
         </v-col>
       </v-row>
       <v-checkbox
-        :error-messages="errors"
-        value="1"
         label=" Permite que le enviemos alertas a su mail, si no registra datos de toma de presion en 15 dias"
         type="checkbox"
         v-model="alerta"
         required
       ></v-checkbox>
       <v-checkbox
-        :error-messages="errors"
-        value="1"
         label=" Permite que sus datos de IMC y Categoria de peso sean visibles dentro de esta APP, pero no fuera de esta pagina"
         type="checkbox"
         v-model="visibilidad"
@@ -171,9 +172,11 @@ export default {
       apeMedico: "",
       categoria: "",
       imc: "",
+      visibilidad: false,
+      alerta: false,
 
       nombreRules: [
-        (value) => !!value || "Required.",
+        (value) => !!value || "Requerido",
         (value) => (value && value.length >= 3) || "Mínimo 3 characters",
       ],
       celularRules: [(value) => (value && value.length == 10) || "#########"],
@@ -190,7 +193,6 @@ export default {
   computed: {
     calcularIMC: function () {
       let indice = parseFloat(this.peso / this.estatura ** 2);
-      console.log(indice);
       return indice;
     },
     calcularCategoria: function () {
@@ -212,8 +214,7 @@ export default {
     },
   },
   created() {
-    console.log("Tiene mail: " + this.$route.params.mail);
-    const mail = this.$route.params.mail;
+    const mail = sessionStorage.getItem("mail");
     if (mail != undefined) {
       getPerfil(mail)
         .then((response) => {
@@ -236,12 +237,14 @@ export default {
         })
         .catch((err) => console.error(err));
     }
+    this.mail = mail;
   },
   methods: {
     guardarUsuario() {
+      const mail = sessionStorage.getItem("mail");
       if (
-        this.mail == undefined ||
-        this.mail == "" ||
+        mail == undefined ||
+        mail == "" ||
         this.nombre == undefined ||
         this.nombre == "" ||
         this.apellido == undefined ||
@@ -254,7 +257,7 @@ export default {
       }
       let request = null;
       const perfilUsuario = {
-        mail: this.mail,
+        mail: mail,
         nombre: this.nombre,
         apellido: this.apellido,
         fechaNacimiento: this.picker,
@@ -275,9 +278,10 @@ export default {
         .catch((err) => console.error(err));
     },
     actualizar() {
+      const mail = sessionStorage.getItem("mail");
       if (
-        this.mail == undefined ||
-        this.mail == "" ||
+        mail == undefined ||
+        mail == "" ||
         this.nombre == undefined ||
         this.nombre == "" ||
         this.apellido == undefined ||
@@ -290,10 +294,6 @@ export default {
       }
 
       const perfilUsuario = {
-        mail: this.mail,
-        nombre: this.nombre,
-        apellido: this.apellido,
-        fechaNacimiento: this.picker,
         estatura: this.estatura,
         peso: this.peso,
         celular: this.celular,
@@ -301,11 +301,11 @@ export default {
         apellidoMedico: this.apeMedico,
         alerta: this.alerta,
         visibilidad: this.visibilidad,
-        imc: this.imc,
+        imc: this.calcularIMC,
         categoriaPeso: this.categoriaPeso,
       };
-      updatePerfil(this.mail, perfilUsuario)
-        .then(() => console.log("Se ha actualizado el perfil de " + this.mail))
+      updatePerfil(mail, perfilUsuario)
+        .then(() => console.log("Se ha actualizado el perfil de " + mail))
         .catch((err) => console.error(err));
     },
   },

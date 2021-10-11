@@ -16,7 +16,8 @@
             solo
             :rules="pasRules"
             suffix="mmHg"
-            requerido
+            required
+            value="pas"
             v-model="pas"
           ></v-text-field>
         </v-col>
@@ -26,12 +27,10 @@
             solo
             :rules="padRules"
             suffix="mmHg"
+            required
+            value="pad"
             v-model="pad"
           ></v-text-field>
-        </v-col>
-        <v-col cols="2" sm="3">
-          <v-text>Presion Arterial</v-text>
-          <v-text-field disabled solo v-model="calcularPresion"></v-text-field>
         </v-col>
         <v-col cols="2" sm="2">
           <v-text>Pulsaciones</v-text>
@@ -39,17 +38,16 @@
             solo
             :rules="pulsoRules"
             suffix="lpm"
+            required
+            value="pulso"
             v-model="pulso"
           ></v-text-field>
         </v-col>
+        <v-col cols="2" sm="3">
+          <v-text>Presion Arterial</v-text>
+          <v-text-field disabled solo v-model="calcularPresion"></v-text-field>
+        </v-col>
       </v-row>
-      <v-data-table
-        :headers="headers"
-        :items="desserts"
-        :items-per-page="5"
-        class="elevation-1"
-      ></v-data-table>
-      <br /><br />
       <v-row>
         <v-col cols="2">
           <v-text>IMC</v-text>
@@ -70,7 +68,8 @@
 </template>
 
 <script>
-import { insertPresion, getPresion } from "../services/tomaPresion.Service";
+import { insertPresion } from "../services/tomaPresion.Service";
+import { getPelfil } from "../services/perfilUsuario.Service";
 
 export default {
   data() {
@@ -80,31 +79,16 @@ export default {
       pulso: "",
       presion: "",
       pasRules: [
-        (value) => !!value || "Required.",
-        (value) =>
-          (value < 60 && value > 250) || "Valores validos entre 60 y 250",
+        (value) => !!value || "Requerido.",
+        (value) => (value < 60 && value > 250) || "Valores validos de 60 a 250",
       ],
       padRules: [
-        (value) => !!value || "Required.",
-        (value) =>
-          (value < 30 && value > 120) || "Valores validos entre 30 y 120",
+        (value) => !!value || "Requerido.",
+        (value) => (value < 30 && value > 120) || "Valores validos de 30 a 120",
       ],
       pulsoRules: [
-        (value) => !!value || "Required.",
-        (value) =>
-          (value < 60 && value > 90) || "Valores validos entre 60 y 90",
-      ],
-      headers: [
-        {
-          text: "Fecha",
-          align: "start",
-          sortable: false,
-          value: "fecha",
-        },
-        { text: "Sístole", value: this.pas },
-        { text: "Diástole", value: this.pad },
-        { text: "Pulsaciones", value: this.pulso },
-        { text: "Presión Arterial", value: this.arterial },
+        (value) => !!value || "Requerido.",
+        (value) => (value < 60 && value > 90) || "Valores validos de 60 a 90",
       ],
     };
   },
@@ -119,9 +103,9 @@ export default {
       }
       if (tpas <= 90 && tpad <= 60) {
         tomaPresion = "Hipotensión";
-      } else if (tpas > 90 && tpas < 120 && tpad > 60 && tpad < 80) {
+      } else if (tpas > 90 && tpas < 121 && tpad > 60 && tpad < 81) {
         tomaPresion = "Normal";
-      } else if (tpas > 119 && tpas < 130 && tpad < 80) {
+      } else if (tpas > 120 && tpas < 130 && tpad < 81) {
         tomaPresion = "Elevada";
       } else if ((tpas > 129 && tpas < 140) || (tpad > 79 && tpad < 90)) {
         tomaPresion = "Etapa 1 de Hipertensión";
@@ -134,19 +118,15 @@ export default {
     },
   },
   created() {
-    console.log("Tiene mail: " + this.$route.params.mail);
-    const mail = this.$route.params.mail;
+    const mail = sessionStorage.getItem("mail");
     if (mail != undefined) {
-      getPresion(mail)
+      getPelfil(mail)
         .then((response) => {
-          const tomaPresion = response.data;
-          this.mail = tomaPresion.mail;
-          this.pas = tomaPresion.sistole;
-          this.pad = tomaPresion.diastole;
-          this.pulso = tomaPresion.pulso;
-          this.calcularPresion = tomaPresion.presion;
+          const datosPerfil = response.data;
+          this.imc = datosPerfil.imc;
+          this.categoria = datosPerfil.categoria;
         })
-        .catch(() => console.log("Usuario sin registro de presiones"));
+        .catch(() => console.log("Usuario sin registro de perfil"));
     }
   },
   methods: {
@@ -184,7 +164,7 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
 h2 {
   padding: 60px 10px 10px 10px;
   text-align: left;
