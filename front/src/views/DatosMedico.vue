@@ -8,9 +8,10 @@
       <v-row>
         <v-col cols="10" sm="8">
           <v-text-field
-            label="mail"
-            solo
+            label="Mail"
+            filled
             hide-details="auto"
+            background-color="white"
             v-model="mail"
           ></v-text-field>
         </v-col>
@@ -19,18 +20,20 @@
         <v-col cols="10" sm="4">
           <v-text-field
             label="Nombre"
-            solo
-            :rules="nombreRules"
+            filled
             hide-details="auto"
+            background-color="white"
+            :rules="nombreRules"
             v-model="nombre"
           ></v-text-field>
         </v-col>
         <v-col cols="10" sm="4">
           <v-text-field
             label="Apellido"
-            solo
-            :rules="nombreRules"
+            filled
             hide-details="auto"
+            background-color="white"
+            :rules="nombreRules"
             v-model="apellido"
           ></v-text-field>
         </v-col>
@@ -40,9 +43,10 @@
         <v-col cols="12" sm="6">
           <v-text-field
             label="Numero celular"
-            solo
-            :rules="celularRules"
+            filled
             hide-details="auto"
+            background-color="white"
+            :rules="celularRules"
             v-model="celular"
           ></v-text-field>
         </v-col>
@@ -52,9 +56,10 @@
         <v-col cols="12" sm="6">
           <v-text-field
             label="Institución donde labora"
-            solo
-            :rules="institucionRules"
+            filled
             hide-details="auto"
+            background-color="white"
+            :rules="institucionRules"
             v-model="institucion"
           ></v-text-field>
         </v-col>
@@ -63,9 +68,10 @@
         <v-col cols="12" sm="6">
           <v-text-field
             label="Registro especial de acreditadores de salud y su insitución"
-            solo
-            :rules="regInstitucionRules"
+            filled
             hide-details="auto"
+            background-color="white"
+            :rules="regInstitucionRules"
             v-model="regInstitucion"
           ></v-text-field>
         </v-col>
@@ -74,9 +80,10 @@
         <v-col cols="12" sm="6">
           <v-text-field
             label="Tarjeta profesional como médico"
-            solo
-            :rules="tarjetaProfRules"
+            filled
             hide-details="auto"
+            background-color="white"
+            :rules="tarjetaProfRules"
             v-model="tarjetaProf"
           ></v-text-field>
         </v-col>
@@ -85,15 +92,12 @@
     <v-container>
       <v-checkbox
         :error-messages="errors"
-        value="1"
         label="Confirmas que toda la información proporcionada es verdadera y podemos verificarla"
         type="checkbox"
         v-model="acepta"
         required
       ></v-checkbox>
       <v-checkbox
-        :error-messages="errors"
-        value="1"
         label="Quieres recibir notificaciones en tu correo sobre la actividad de tus pacientes"
         type="checkbox"
         v-model="alerta"
@@ -101,6 +105,7 @@
       ></v-checkbox>
       <v-row align="center" justify="space-around">
         <v-btn rounded color="primary" @click="guardarMedico()">Guardar</v-btn>
+        <v-btn to="Home" rounded color="primary">Regresar</v-btn>
         <br /><br />
       </v-row>
     </v-container>
@@ -123,6 +128,8 @@ export default {
       institucion: "",
       regInstitucion: "",
       tarjetaProf: "",
+      alerta: false,
+      acepta: false,
       nombreRules: [
         (value) => !!value || "Requerido",
         (value) => (value && value.length >= 3) || "Min 3 characters",
@@ -131,17 +138,13 @@ export default {
         (value) => !!value || "Requerido",
         (value) => (value && value.length >= 3) || "Min 3 characters",
       ],
-      fechaRules: [
-        (value) => !!value || "Requerido",
-        (value) => (value && value.length == 10) || "AAAA/MM/DD",
-      ],
       celularRules: [
         (value) => !!value || "Requerido",
         (value) => (value && value.length == 10) || "##########",
       ],
       institucionRules: [
         (value) => !!value || "Requerido",
-        (value) => (value && value.length >= 5) || "Min 5 characters",
+        (value) => (value && value.length >= 3) || "Min 3 characters",
       ],
       regInstitucionRules: [
         (value) => !!value || "Requerido",
@@ -155,8 +158,9 @@ export default {
   },
 
   created() {
-    console.log("Tiene mail: " + this.$route.params.mail);
-    const mail = this.$route.params.mail;
+    /*    console.log("Tiene mail: " + this.$route.params.mail);
+    const mail = this.$route.params.mail;*/
+    const mail = sessionStorage.getItem("mail");
     if (mail != undefined) {
       getMedico(mail)
         .then((response) => {
@@ -175,6 +179,7 @@ export default {
         })
         .catch(() => console.log("Medico sin perfil registrado"));
     }
+    this.mail = mail;
   },
   methods: {
     guardarMedico() {
@@ -223,9 +228,6 @@ export default {
       }
 
       const perfilMedico = {
-        mail: this.mail,
-        nombre: this.nombre,
-        apellido: this.apellido,
         celular: this.celular,
         institucion: this.institucion,
         regInstitucion: this.regInstitucion,
@@ -241,7 +243,7 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
 h2 {
   padding: 60px 10px 10px 10px;
   text-align: left;
