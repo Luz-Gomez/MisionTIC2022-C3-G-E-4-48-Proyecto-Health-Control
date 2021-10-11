@@ -1,5 +1,8 @@
 <template>
-  <v-navigation-drawer v-model="drawer" app absolute bottom temporary>
+  <v-navigation-drawer v-model="drawer" app
+      absolute
+      bottom
+      temporary>
     <v-list-item>
       <v-list-item-content>
         <v-list-item-subtitle> {{ username }} </v-list-item-subtitle>
@@ -29,7 +32,10 @@ export default {
     return {
       username: "",
       items: [
-        { nombre: "Inicio", imagen: "mdi-home", ruta: "/", ver: true },
+        { nombre: "Inicio", 
+        imagen: "mdi-home", 
+        ruta: "/",
+         ver: true },
         {
           nombre: "Home",
           imagen: "mdi-apps-box",
@@ -54,22 +60,10 @@ export default {
           ruta: "/TomaPresion",
           ver: true,
         },
-        {
-          nombre: "Consulta Toma de presión",
-          imagen: "mdi-wallet",
-          ruta: "/ConsultaTomaPresion",
-          ver: true,
-        },
-        {
-          nombre: "Perfil Medico",
-          imagen: "mdi-account-child-circle",
-          ruta: "/DatosMedico",
-          ver: true,
-        },
       ],
     };
   },
-  mounted() {
+  mounted(){
     this.username = sessionStorage.getItem("username");
   },
   methods: {
