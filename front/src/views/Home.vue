@@ -24,8 +24,8 @@
       </p>
 
       <v-row align="center" justify="space-around">
-        <v-btn to="/IniciarSesion" large color="#FFBE5E"
-          >Iniciar Sesíon</v-btn
+        <v-btn to="/IniciarSesion" large color="#FFBE5E" dark
+          >Iniciar Sesión</v-btn
         > </v-row
       ><br /><br />
       <h3>¿Qué puedes hacer con Health control?</h3>
@@ -76,7 +76,7 @@
             >
           </v-list-item-content>
         </v-list-item>
-      </v-card>
+      </v-card><br>
     </body>
   </div>
 </template>

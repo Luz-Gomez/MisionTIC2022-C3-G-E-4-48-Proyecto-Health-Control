@@ -60,7 +60,7 @@
       </v-row>
       <v-row align="center" justify="space-around">
         <v-btn rounded color="primary" @click="guardarPresion()">Guardar</v-btn>
-        <v-btn rounded color="primary" @click="consejos()">Consejos</v-btn>
+        <v-btn to="/Consejos" rounded color="primary" @click="consejos()">Consejos</v-btn>
         <br /><br />
       </v-row>
     </v-container>
