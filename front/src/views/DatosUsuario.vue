@@ -145,11 +145,11 @@
         required
       ></v-checkbox>
       <v-row align="center" justify="space-around">
-        <v-btn rounded color="primary" @click="guardarUsuario()">Guardar</v-btn>
-        <v-btn rounded color="primary" @click="actualizar()">Actualizar</v-btn>
+        <v-btn rounded color="#65B3FC" dark @click="guardarUsuario()">Guardar</v-btn>
+        <v-btn rounded color="#65B3FC" dark @click="actualizar()">Actualizar</v-btn>
         <br /><br />
       </v-row>
-    </v-container>
+    </v-container><br>
   </body>
 </template>
 

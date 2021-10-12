@@ -108,7 +108,7 @@
         <v-btn to="Home" rounded color="primary">Regresar</v-btn>
         <br /><br />
       </v-row>
-    </v-container>
+    </v-container><br>
   </body>
 </template>
 
