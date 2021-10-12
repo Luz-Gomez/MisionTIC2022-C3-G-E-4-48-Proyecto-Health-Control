@@ -19,7 +19,9 @@
 
       <v-list>
         <v-list-item v-if="!isLoggedIn">
-          <v-list-item-title @click="showLogin = true">Iniciar sesión</v-list-item-title>
+          <v-list-item-title @click="showLogin = true"
+            >Iniciar sesión</v-list-item-title
+          >
         </v-list-item>
         <v-list-item v-if="isLoggedIn" @click="logOut()">
           <v-list-item-title>Cerrar sesión</v-list-item-title>
@@ -37,27 +39,27 @@ import Login from "./Login.vue";
 
 export default {
   components: {
-    Login
+    Login,
   },
   props: ["title", "drawer"],
   data() {
     return {
-      showLogin: false
+      showLogin: false,
     };
   },
   methods: {
     switchDrawer() {
       this.$emit("switch-drawer", !this.drawer);
     },
-    logOut(){
-      sessionStorage.removeItem("username");
-      sessionStorage.removeItem("role");
+    logOut() {
+      sessionStorage.removeItem("mail");
+      sessionStorage.removeItem("tipo");
       window.location.reload();
-    }
+    },
   },
   computed: {
     isLoggedIn() {
-      const username = sessionStorage.getItem("username");
+      const username = sessionStorage.getItem("mail");
       return username != undefined;
     },
   },

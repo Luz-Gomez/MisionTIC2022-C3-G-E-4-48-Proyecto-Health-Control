@@ -76,6 +76,7 @@
             disabled
             solo
             label=""
+            mask="###.##"
             v-model="calcularIMC"
           ></v-text-field>
         </v-col>
@@ -171,7 +172,7 @@ export default {
       nomMedico: "",
       apeMedico: "",
       categoria: "",
-      imc: "",
+      imc: "###.##'",
       visibilidad: false,
       alerta: false,
 
@@ -257,7 +258,7 @@ export default {
       }
       let request = null;
       const perfilUsuario = {
-        mail: mail,
+        mail: this.mail,
         nombre: this.nombre,
         apellido: this.apellido,
         fechaNacimiento: this.picker,
@@ -274,7 +275,7 @@ export default {
 
       request = insertPerfil(perfilUsuario);
       request
-        .then((response) => console.log(response))
+        .then(() => this.$router.push("/TomaPresion"))
         .catch((err) => console.error(err));
     },
     actualizar() {
@@ -305,7 +306,7 @@ export default {
         categoriaPeso: this.categoriaPeso,
       };
       updatePerfil(mail, perfilUsuario)
-        .then(() => console.log("Se ha actualizado el perfil de " + mail))
+        .then(() => this.$router.push("/TomaPresion"))
         .catch((err) => console.error(err));
     },
   },

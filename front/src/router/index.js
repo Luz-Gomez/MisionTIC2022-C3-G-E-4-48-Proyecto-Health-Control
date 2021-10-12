@@ -34,6 +34,16 @@ const routes = [
     path: '/ConsultaTomaPresion',
     name: 'ConsultaTomaPresion',
     component: () => import('../views/ConsultaTomaPresion.vue')
+  },
+  {
+    path: '/IniciarSesion',
+    name: 'IniciarSesion',
+    component: () => import('../views/IniciarSesion.vue')
+  },
+  {
+    path: '/Registro',
+    name: 'Registro',
+    component: () => import('../views/Registro.vue')
   }
 ]
 

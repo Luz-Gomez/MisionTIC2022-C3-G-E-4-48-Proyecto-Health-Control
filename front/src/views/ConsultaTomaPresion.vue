@@ -36,7 +36,7 @@
       <br /><br />
       <v-row justify="space-around">
         <v-btn rounded color="primary">Generar PDF</v-btn>
-        <v-btn to="Home" rounded color="primary">Regresar</v-btn>
+        <v-btn to="/About" rounded color="primary">Regresar</v-btn>
         <br /><br />
       </v-row>
       <br /><br />
@@ -54,6 +54,7 @@ export default {
       headers: [
         {
           text: "Fecha",
+          mask: "date-with-time",
           align: "start",
           sortable: false,
           value: "fecha",
@@ -73,7 +74,7 @@ export default {
         .then((response) => {
           this.tomasPresion = response.data;
         })
-        .catch(() => console.log("Usuario sin registro de presiones"));
+        .catch((err) => console.error(err));
     }
     this.mail = mail;
   },
