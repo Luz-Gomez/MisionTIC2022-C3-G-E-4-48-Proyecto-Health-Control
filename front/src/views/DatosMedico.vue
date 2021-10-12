@@ -158,8 +158,6 @@ export default {
   },
 
   created() {
-    /*    console.log("Tiene mail: " + this.$route.params.mail);
-    const mail = this.$route.params.mail;*/
     const mail = sessionStorage.getItem("mail");
     if (mail != undefined) {
       getMedico(mail)
@@ -211,8 +209,8 @@ export default {
       request = insertMedico(perfilMedico);
       console.log(request);
       request
-        .then((response) => console.log("Sale" + response))
-        .catch(() => console.log("Error al actualizar medico"));
+        .then(() => this.$router.push("/Home"))
+        .catch((err) => console.error(err));
     },
     actualizar() {
       if (
@@ -236,8 +234,8 @@ export default {
         alerta: this.alerta,
       };
       updateMedico(this.mail, perfilMedico)
-        .then(() => console.log("Se ha actualizado el perfil de " + this.mail))
-        .catch(() => console.log("Error al actualizar medico"));
+        .then(() => this.$router.push("/Home"))
+        .catch((err) => console.error(err));
     },
   },
 };

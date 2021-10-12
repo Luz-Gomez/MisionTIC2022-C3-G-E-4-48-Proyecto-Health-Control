@@ -4,13 +4,16 @@ const END_POINT = "/api/autenticar";
 
 const validarUsuario = (mail, contraseña) => {
     const usuario = {
-        "usuario": mail,
+        "mail": mail,
         "contraseña": contraseña
     };
     return httpClient.post(END_POINT, usuario);
 };
 
+const insertUsuario = (usuarios) => httpClient.post(END_POINT, usuarios);
+
 export {
-    validarUsuario
+    validarUsuario,
+    insertUsuario
 }
 

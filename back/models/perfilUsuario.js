@@ -4,7 +4,7 @@ const perfilUsuarioSchema = mongoose.Schema({
     "mail": String,
     "nombre": String,
     "apellido": String,
-    "fechaNacimiento": String,
+    "fechaNacimiento": Date,
     "estatura": Number,
     "peso": Number,
     "celular": String,

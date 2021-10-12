@@ -27,9 +27,14 @@ export default {
   props: ["title", "drawer"],
   data() {
     return {
-      username: "",
+      mail: "",
       items: [
-        { nombre: "Inicio", imagen: "mdi-home", ruta: "/", ver: true },
+        {
+          nombre: "Inicio",
+          imagen: "mdi-home",
+          ruta: "/",
+          ver: true,
+        },
         {
           nombre: "Home",
           imagen: "mdi-apps-box",
@@ -66,11 +71,17 @@ export default {
           ruta: "/DatosMedico",
           ver: true,
         },
+        {
+          nombre: "IniciarSesion",
+          imagen: "mdi-account-plus",
+          ruta: "/IniciarSesion",
+          ver: true,
+        },
       ],
     };
   },
   mounted() {
-    this.username = sessionStorage.getItem("username");
+    this.username = sessionStorage.getItem("mail");
   },
   methods: {
     hasRole(role) {

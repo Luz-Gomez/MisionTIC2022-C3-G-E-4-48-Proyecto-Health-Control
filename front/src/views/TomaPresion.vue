@@ -6,7 +6,7 @@
       <v-row>
         <v-col cols="12" sm="6">
           <v-text>Mail</v-text>
-          <v-text-field label="" solo requerido v-model="mail"></v-text-field>
+          <v-text-field disabled solo required v-model="mail"></v-text-field>
         </v-col>
       </v-row>
       <v-row>
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { insertPresion } from "../services/tomaPresion.Service";
+import { insertPresion, getPresion } from "../services/tomaPresion.Service";
 import { getPelfil } from "../services/perfilUsuario.Service";
 
 export default {
@@ -78,6 +78,8 @@ export default {
       pad: "",
       pulso: "",
       presion: "",
+      imc: "",
+      categoria: "",
       pasRules: [
         (value) => !!value || "Requerido.",
         (value) => (value < 60 && value > 250) || "Valores validos de 60 a 250",
@@ -96,44 +98,54 @@ export default {
     calcularPresion: function () {
       let tpas = parseFloat(this.pas);
       let tpad = parseFloat(this.pad);
-      let tomaPresion = "";
+      let tpresion = "";
       if (tpas < tpad || tpas - tpad < 15) {
-        tomaPresion = "Valores incorrectos";
-        return tomaPresion;
+        tpresion = "Valores incorrectos";
+        return tpresion;
       }
       if (tpas <= 90 && tpad <= 60) {
-        tomaPresion = "Hipotensión";
+        tpresion = "Hipotensión";
       } else if (tpas > 90 && tpas < 121 && tpad > 60 && tpad < 81) {
-        tomaPresion = "Normal";
+        tpresion = "Normal";
       } else if (tpas > 120 && tpas < 130 && tpad < 81) {
-        tomaPresion = "Elevada";
+        tpresion = "Elevada";
       } else if ((tpas > 129 && tpas < 140) || (tpad > 79 && tpad < 90)) {
-        tomaPresion = "Etapa 1 de Hipertensión";
+        tpresion = "Etapa 1 de Hipertensión";
       } else if ((tpas > 139 && tpas < 181) || (tpad > 99 && tpas < 121)) {
-        tomaPresion = "Etapa 2 de Hipertensión";
+        tpresion = "Etapa 2 de Hipertensión";
       } else if (tpas > 180 && tpad > 120) {
-        tomaPresion = "Crisis Hipertensiva";
+        tpresion = "Crisis Hipertensiva";
       }
-      return tomaPresion;
+      return tpresion;
     },
   },
   created() {
     const mail = sessionStorage.getItem("mail");
     if (mail != undefined) {
+      getPresion(mail)
+        .then((response) => {
+          this.tomasPresion = response.data;
+        })
+        .catch((err) => console.error(err));
+    }
+    this.mail = mail;
+
+    if (mail != undefined) {
       getPelfil(mail)
         .then((response) => {
           const datosPerfil = response.data;
           this.imc = datosPerfil.imc;
-          this.categoria = datosPerfil.categoria;
+          this.categoria = datosPerfil.categoriaPeso;
         })
-        .catch(() => console.log("Usuario sin registro de perfil"));
+        .catch((err) => console.error(err));
     }
   },
   methods: {
     guardarPresion() {
+      const mail = sessionStorage.getItem("mail");
       if (
-        this.mail == undefined ||
-        this.mail == "" ||
+        mail == undefined ||
+        mail == "" ||
         this.pas == undefined ||
         this.pas == "" ||
         this.pad == undefined ||
@@ -145,20 +157,21 @@ export default {
         return;
       }
       let request = null;
+      let fecha = new Date(Date.now());
+
       const tomaPresion = {
         mail: this.mail,
-        fecha: new Date(Date.now()),
+        fecha: fecha,
         sistole: this.pas,
         diastole: this.pad,
         pulso: this.pulso,
         presion: this.calcularPresion,
       };
-      console.log("Entro:", tomaPresion);
       request = insertPresion(tomaPresion);
       console.log(request);
       request
-        .then((response) => console.log("Sale" + response))
-        .catch(() => console.log("Error al actualizar presiones"));
+        .then(() => this.$router.push("/ConsultaTomaPresion"))
+        .catch((err) => console.error(err));
     },
   },
 };
