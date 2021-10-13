@@ -48,28 +48,40 @@
           <v-text-field disabled solo v-model="calcularPresion"></v-text-field>
         </v-col>
       </v-row>
-      <v-row>
-        <v-col cols="2">
-          <v-text>IMC</v-text>
-          <v-text-field solo disabled v-model="imc"></v-text-field>
-        </v-col>
-        <v-col cols="3">
-          <v-text>Categoria de Peso</v-text>
-          <v-text-field solo disabled v-model="categoria"></v-text-field>
+      <v-row align="left">
+        <v-col cols="12" sm="8">
+          <v-data-table
+            :headers="headers"
+            :items="consultaPresion"
+            :items-per-page="5"
+            item-key="mail"
+            class="elevation-1"
+          >
+            <template slot="items" slot-scope="props">
+              <td class="text-xs-right">{{ props.item.fecha }}</td>
+              <td class="text-xs-right">{{ props.item.sistole }}</td>
+              <td class="text-xs-right">{{ props.item.diastole }}</td>
+              <td class="text-xs-right">{{ props.item.pulso }}</td>
+              <td class="text-xs-right">{{ props.item.presion }}</td>
+            </template>
+          </v-data-table>
         </v-col>
       </v-row>
+      <br /><br />
       <v-row align="center" justify="space-around">
-        <v-btn rounded color="primary" @click="guardarPresion()">Guardar</v-btn>
-        <v-btn to="/Consejos" rounded color="primary" @click="consejos()">Consejos</v-btn>
+        <v-btn rounded color="#65B3FC" @click="guardarPresion()">Guardar</v-btn>
+        <v-btn to="/Tips" rounded color="#65B3FC" @click="tips()"
+          >Tips sobre tu Nivel de Presión</v-btn
+        >
         <br /><br />
       </v-row>
+      <br /><br />
     </v-container>
   </body>
 </template>
 
 <script>
 import { insertPresion, getPresion } from "../services/tomaPresion.Service";
-import { getPelfil } from "../services/perfilUsuario.Service";
 
 export default {
   data() {
@@ -92,6 +104,21 @@ export default {
         (value) => !!value || "Requerido.",
         (value) => (value < 60 && value > 90) || "Valores validos de 60 a 90",
       ],
+      consultaPresion: [],
+      headers: [
+        {
+          text: "Fecha",
+          mask: "date-with-time",
+          align: "start",
+          sortable: false,
+          value: "fecha",
+          sort: "fecha",
+        },
+        { text: "Sístole", value: "sistole" },
+        { text: "Diástole", value: "diastole" },
+        { text: "Pulsaciones", value: "pulso" },
+        { text: "Presión Arterial", value: "presion" },
+      ],
     };
   },
   computed: {
@@ -103,7 +130,7 @@ export default {
         tpresion = "Valores incorrectos";
         return tpresion;
       }
-      if (tpas <= 90 && tpad <= 60) {
+      if (tpas <= 90 || tpad <= 60) {
         tpresion = "Hipotensión";
       } else if (tpas > 90 && tpas < 121 && tpad > 60 && tpad < 81) {
         tpresion = "Normal";
@@ -113,7 +140,7 @@ export default {
         tpresion = "Etapa 1 de Hipertensión";
       } else if ((tpas > 139 && tpas < 181) || (tpad > 99 && tpas < 121)) {
         tpresion = "Etapa 2 de Hipertensión";
-      } else if (tpas > 180 && tpad > 120) {
+      } else if (tpas > 180 || tpad > 120) {
         tpresion = "Crisis Hipertensiva";
       }
       return tpresion;
@@ -124,21 +151,12 @@ export default {
     if (mail != undefined) {
       getPresion(mail)
         .then((response) => {
-          this.tomasPresion = response.data;
+          this.consultaPresion = response.data;
+          this.tomaPresion = response.data;
         })
         .catch((err) => console.error(err));
     }
     this.mail = mail;
-
-    if (mail != undefined) {
-      getPelfil(mail)
-        .then((response) => {
-          const datosPerfil = response.data;
-          this.imc = datosPerfil.imc;
-          this.categoria = datosPerfil.categoriaPeso;
-        })
-        .catch((err) => console.error(err));
-    }
   },
   methods: {
     guardarPresion() {
@@ -170,7 +188,7 @@ export default {
       request = insertPresion(tomaPresion);
       console.log(request);
       request
-        .then(() => this.$router.push("/ConsultaTomaPresion"))
+        .then(() => window.location.reload())
         .catch((err) => console.error(err));
     },
   },

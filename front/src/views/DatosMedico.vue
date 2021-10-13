@@ -105,10 +105,14 @@
       ></v-checkbox>
       <v-row align="center" justify="space-around">
         <v-btn rounded color="primary" @click="guardarMedico()">Guardar</v-btn>
-        <v-btn to="Home" rounded color="primary">Regresar</v-btn>
+        <v-btn rounded color="primary" @click="actualizar()">Actualizar</v-btn>
+        <v-btn to="/ConsultaTomaPresion" rounded color="primary"
+          >Ver Presiones</v-btn
+        >
+        <v-btn to="/About" rounded color="primary">Regresar</v-btn>
         <br /><br />
-      </v-row>
-    </v-container><br>
+      </v-row> </v-container
+    ><br />
   </body>
 </template>
 
@@ -205,11 +209,10 @@ export default {
         alerta: this.alerta,
       };
 
-      console.log("Entro:", perfilMedico);
       request = insertMedico(perfilMedico);
       console.log(request);
       request
-        .then(() => this.$router.push("/Home"))
+        .then((response) => console.log(response), window.location.reload())
         .catch((err) => console.error(err));
     },
     actualizar() {
@@ -234,7 +237,7 @@ export default {
         alerta: this.alerta,
       };
       updateMedico(this.mail, perfilMedico)
-        .then(() => this.$router.push("/Home"))
+        .then((response) => console.log(response), window.location.reload())
         .catch((err) => console.error(err));
     },
   },

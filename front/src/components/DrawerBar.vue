@@ -3,8 +3,37 @@
     <v-list-item>
       <v-list-item-content>
         <v-list-item-subtitle> {{ username }} </v-list-item-subtitle>
+        <v-list-item-subtitle> {{ tipo }} </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
+
+    <v-list dense nav v-if="tipo === 'usuario'">
+      <div v-for="item in itemsUsuario" :key="item.nombre">
+        <v-list-item link :to="item.ruta" v-if="item.ver">
+          <v-list-item-icon>
+            <v-icon>{{ item.imagen }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.nombre }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
+    </v-list>
+
+    <v-list dense nav v-if="tipo === 'medico'">
+      <div v-for="item in itemsMedico" :key="item.nombre">
+        <v-list-item link :to="item.ruta" v-if="item.ver">
+          <v-list-item-icon>
+            <v-icon>{{ item.imagen }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.nombre }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
+    </v-list>
 
     <v-list dense nav>
       <div v-for="item in items" :key="item.nombre">
@@ -28,13 +57,9 @@ export default {
   data() {
     return {
       mail: "",
+
       items: [
-        {
-          nombre: "Inicio",
-          imagen: "mdi-home",
-          ruta: "/",
-          ver: true,
-        },
+        { nombre: "Inicio", imagen: "mdi-home", ruta: "/", ver: true },
         {
           nombre: "Home",
           imagen: "mdi-apps-box",
@@ -48,6 +73,14 @@ export default {
           ver: true,
         },
         {
+          nombre: "IniciarSesion",
+          imagen: "mdi-account-plus",
+          ruta: "/IniciarSesion",
+          ver: true,
+        },
+      ],
+      itemsUsuario: [
+        {
           nombre: "DatosUsuario",
           imagen: "mdi-account-circle",
           ruta: "/DatosUsuario",
@@ -55,13 +88,15 @@ export default {
         },
         {
           nombre: "Toma de presión",
-          imagen: "mdi-car-cruise-control",
+          imagen: "mdi-heart-pulse",
           ruta: "/TomaPresion",
           ver: true,
         },
+      ],
+      itemsMedico: [
         {
           nombre: "Consulta Toma de presión",
-          imagen: "mdi-wallet",
+          imagen: "mdi-clipboard-pulse",
           ruta: "/ConsultaTomaPresion",
           ver: true,
         },
@@ -71,21 +106,17 @@ export default {
           ruta: "/DatosMedico",
           ver: true,
         },
-        {
-          nombre: "IniciarSesion",
-          imagen: "mdi-account-plus",
-          ruta: "/IniciarSesion",
-          ver: true,
-        },
       ],
     };
   },
+
   mounted() {
     this.username = sessionStorage.getItem("mail");
+    this.tipo = sessionStorage.getItem("tipo");
   },
   methods: {
     hasRole(role) {
-      return sessionStorage.getItem("role") == role;
+      return sessionStorage.getItem("tipo") == role;
     },
   },
 };

@@ -31,6 +31,7 @@ router.post("/perfilUsuario", PerfilUsuarioController.insert);
 router.put("/perfilUsuario/:mail", PerfilUsuarioController.update);
 
 //Rutas de toma de presion
+router.get("/tomaPresion", TomaPresionController.getAll);
 router.get("/tomaPresion/:mail", TomaPresionController.getBymail);
 router.post("/tomaPresion", TomaPresionController.insert);
 

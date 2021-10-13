@@ -1,21 +1,23 @@
 <template>
   <body>
     <v-container>
-      <h2>Consulta Toma Presión Arterial</h2>
+      <h2>Consulta Tomas de Presión Arterial</h2>
+      <h3>Por favor digite el mail</h3>
       <v-row>
         <v-col cols="12" sm="6">
           <v-text-field
             label="Mail"
             filled
-            hide-details="auto"
+            :loading="loadingState"
             background-color="white"
-            disabled
+            @keyup.enter="verPresion()"
             v-model="mail"
           ></v-text-field>
+          <h3>En construccion consulta por medico tratante ...</h3>
         </v-col>
       </v-row>
       <v-row align="left">
-        <v-col cols="12" sm="6">
+        <v-col cols="12" sm="8">
           <v-data-table
             :headers="headers"
             :items="tomasPresion"
@@ -35,7 +37,6 @@
       </v-row>
       <br /><br />
       <v-row justify="space-around">
-        <v-btn rounded color="primary">Generar PDF</v-btn>
         <v-btn to="/About" rounded color="primary">Regresar</v-btn>
         <br /><br />
       </v-row>
@@ -50,6 +51,8 @@ import { getPresion } from "../services/tomaPresion.Service";
 export default {
   data() {
     return {
+      loadingState: false,
+      mail: "",
       tomasPresion: [],
       headers: [
         {
@@ -67,16 +70,19 @@ export default {
       ],
     };
   },
-  created() {
-    const mail = sessionStorage.getItem("mail");
-    if (mail != undefined) {
-      getPresion(mail)
+  methods: {
+    verPresion() {
+      this.loadingState = true;
+      getPresion(this.mail)
         .then((response) => {
           this.tomasPresion = response.data;
+          this.loadingState = false;
         })
-        .catch((err) => console.error(err));
-    }
-    this.mail = mail;
+        .catch(() => {
+          this.loadingState = false;
+          console.error("Error al consulta presiones");
+        });
+    },
   },
 };
 </script>
