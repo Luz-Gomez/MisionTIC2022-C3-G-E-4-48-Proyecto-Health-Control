@@ -38,12 +38,26 @@
                           @click:append="showPassword = !showPassword"
                         />
                       </v-form>
-                      <v-alert border="left" dense outlined type="warning" dark v-model="showError">
+                      <v-alert
+                        border="left"
+                        dense
+                        outlined
+                        type="warning"
+                        dark
+                        v-model="showError"
+                      >
                         {{ error }}
                       </v-alert>
                     </v-card-text>
-                    <div class="text-center mt-n5">                        
-                        <v-btn runded color="#FFBE5E" dark @click="loginFunction()">Ingresa</v-btn>                      
+                    <div class="text-center mt-n5">
+                      <v-btn
+                        runded
+                        color="#FFBE5E"
+                        dark
+                        @click="loginFunction()"
+                        >Ingresa</v-btn
+                      >
+                      <br /><br />
                     </div>
                   </v-col>
                   <v-col cols="12" md="4" class="teal primary">

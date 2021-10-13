@@ -1,6 +1,14 @@
 const tomaPresionModel = require("../models/tomaPresion")
 
 module.exports = class TomaPresionController {
+    static async getAll (req, res) {
+        try{
+            const tomaPresion = await tomaPresionModel.find();
+            res.status(200).json(tomaPresion);
+        } catch (err) {
+            res.status(404).json({message: err.message});     
+        }
+    }
 
     static async getBymail(req, res) {
         const mail = req.params.mail

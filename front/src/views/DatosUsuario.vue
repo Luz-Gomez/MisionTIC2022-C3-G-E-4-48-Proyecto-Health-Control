@@ -145,11 +145,16 @@
         required
       ></v-checkbox>
       <v-row align="center" justify="space-around">
-        <v-btn rounded color="#65B3FC" dark @click="guardarUsuario()">Guardar</v-btn>
-        <v-btn rounded color="#65B3FC" dark @click="actualizar()">Actualizar</v-btn>
+        <v-btn rounded color="#65B3FC" @click="guardarUsuario()">Guardar</v-btn>
+        <v-btn rounded color="#65B3FC" @click="actualizar()">Actualizar</v-btn>
+        <v-btn to="/Consejos" rounded color="#65B3FC" @click="consejos()"
+          >Consejos</v-btn
+        >
+        <v-btn to="/TomaPresion" rounded color="#65B3FC">Toma Presión</v-btn>
+        <v-btn to="/About" rounded color="#65B3FC">Regresar</v-btn>
         <br /><br />
-      </v-row>
-    </v-container><br>
+      </v-row> </v-container
+    ><br />
   </body>
 </template>
 
@@ -275,7 +280,7 @@ export default {
 
       request = insertPerfil(perfilUsuario);
       request
-        .then(() => this.$router.push("/TomaPresion"))
+        .then((response) => console.log(response), window.location.reload())
         .catch((err) => console.error(err));
     },
     actualizar() {
@@ -306,7 +311,7 @@ export default {
         categoriaPeso: this.categoriaPeso,
       };
       updatePerfil(mail, perfilUsuario)
-        .then(() => this.$router.push("/TomaPresion"))
+        .then((response) => console.log(response), window.location.reload())
         .catch((err) => console.error(err));
     },
   },
