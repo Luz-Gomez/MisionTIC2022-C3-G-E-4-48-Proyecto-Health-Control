@@ -6,10 +6,6 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn icon>
-      <v-icon>mdi-magnify</v-icon>
-    </v-btn>
-
     <v-menu left bottom>
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
@@ -54,7 +50,7 @@ export default {
     logOut() {
       sessionStorage.removeItem("mail");
       sessionStorage.removeItem("tipo");
-      window.location.reload();
+      this.$router.push("/");
     },
   },
   computed: {
@@ -65,6 +61,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

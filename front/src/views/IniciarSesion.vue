@@ -43,7 +43,6 @@
                         dense
                         outlined
                         type="warning"
-                        dark
                         v-model="showError"
                       >
                         {{ error }}
@@ -136,29 +135,4 @@ export default {
 };
 </script>
 
-<style scope>
-body {
-  background-color: #65b3fc;
-}
 
-#logo {
-  display: block;
-  margin: auto;
-  padding: 250px 100px 15px 25px;
-}
-h1 {
-  text-align: left;
-  font-family: monospace;
-  font-size: 30px;
-  padding: 50px 25px 20px 25px;
-  color: white;
-}
-
-p {
-  text-align: justify;
-  font-family: monospace;
-  font-size: 20px;
-  padding: 10px 100px 10px 100px;
-  color: whitesmoke;
-}
-</style>

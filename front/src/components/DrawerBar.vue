@@ -7,6 +7,8 @@
       </v-list-item-content>
     </v-list-item>
 
+    <v-divider></v-divider>
+
     <v-list dense nav v-if="tipo === 'usuario'">
       <div v-for="item in itemsUsuario" :key="item.nombre">
         <v-list-item link :to="item.ruta" v-if="item.ver">
@@ -121,6 +123,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>
