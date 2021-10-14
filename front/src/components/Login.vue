@@ -5,25 +5,27 @@
       <v-text-field
         label="Correo"
         prepend-icon="mdi-at"
+        color="#65B3FC"
         :rules="rulesMail"
-        hide-details="auto"
         v-model="mail"
       ></v-text-field>
 
       <v-text-field
         label="Contraseña"
         prepend-icon="mdi-lock"
+        color="#65B3FC"
         :rules="rulesContraseña"
+        :type="showPassword ? 'text':'password'"
         hide-details="auto"
         v-model="contraseña"
-        type="contraseña"
+        @click:append="showPassword = !showPassword"
       ></v-text-field>
 
       <v-alert
         border="left"
-        color="orange"
-        type="error"
-        dark
+        dense
+        outlined
+        type="warning"
         v-model="showError"
         >{{ error }}</v-alert
       >
@@ -72,11 +74,13 @@ export default {
           console.log("error", err.respuesta);
           this.showError = true;
           this.error = err.respuesta.data.message;
+          setInterval(() => {
+            this.showError = false;
+          }, 3000);
         });
     },
   },
 };
 </script>
 
-<style scoped>
-</style>
+

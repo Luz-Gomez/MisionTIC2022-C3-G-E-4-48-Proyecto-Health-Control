@@ -59,9 +59,20 @@
                           v-model="contraseña"
                         />
                       </v-form>
+                      <v-alert
+                        border="left"
+                        dense
+                        outlined
+                        type="warning"
+                        v-model="showError"
+                      >
+                        {{ error }}
+                      </v-alert>
                     </v-card-text>
                     <div class="text-center mt-n5">
-                      <v-btn rounded color="#FFBE5E" dark @click="guardar()">Regístrate</v-btn>
+                      <v-btn rounded color="#FFBE5E" dark @click="insert()"
+                        >Regístrate</v-btn
+                      >
                     </div>
                     <br /><br />
                   </v-col>
@@ -102,7 +113,7 @@ export default {
     source: String,
   },
   methods: {
-    guardar() {
+    insert() {
       if (
         this.mail == undefined ||
         this.mail == "" ||
@@ -130,29 +141,3 @@ export default {
 };
 </script>
 
-<style scope>
-body {
-  background-color: #65b3fc;
-}
-
-#logo {
-  display: block;
-  margin: auto;
-  padding: 250px 100px 15px 25px;
-}
-h1 {
-  text-align: left;
-  font-family: monospace;
-  font-size: 30px;
-  padding: 50px 25px 20px 25px;
-  color: white;
-}
-
-p {
-  text-align: justify;
-  font-family: monospace;
-  font-size: 20px;
-  padding: 10px 100px 10px 100px;
-  color: whitesmoke;
-}
-</style>

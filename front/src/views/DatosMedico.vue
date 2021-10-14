@@ -104,12 +104,12 @@
         required
       ></v-checkbox>
       <v-row align="center" justify="space-around">
-        <v-btn rounded color="primary" @click="guardarMedico()">Guardar</v-btn>
-        <v-btn rounded color="primary" @click="actualizar()">Actualizar</v-btn>
-        <v-btn to="/ConsultaTomaPresion" rounded color="primary"
+        <v-btn rounded color="#FFBE5E" dark @click="guardarMedico()">Guardar</v-btn>
+        <v-btn rounded color="#FFBE5E" dark @click="actualizar()">Actualizar</v-btn>
+        <v-btn to="/ConsultaTomaPresion" rounded color="#FFBE5E" dark
           >Ver Presiones</v-btn
         >
-        <v-btn to="/About" rounded color="primary">Regresar</v-btn>
+        <v-btn to="/About" rounded color="#FFBE5E" dark>Regresar</v-btn>
         <br /><br />
       </v-row> </v-container
     ><br />

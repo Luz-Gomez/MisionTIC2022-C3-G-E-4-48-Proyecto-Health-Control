@@ -24,10 +24,10 @@
       </p>
 
       <v-row align="center" justify="space-around">
-        <v-btn to="/IniciarSesion" large color="#FFBE5E" dark
+        <v-btn to="/IniciarSesion" large rounded color="#FFBE5E" dark
           >Iniciar Sesión</v-btn
         >
-        <v-btn large color="#FFBE5E" dark @click="logOut()"
+        <v-btn large rounded color="#FFBE5E" dark @click="logOut()"
           >Cerrar Sesión</v-btn
         > </v-row
       ><br /><br />
@@ -86,27 +86,7 @@
 
 <script>
 export default {
-  data: () => ({
-    step: 1,
-    return: {
-      mail: "",
-      contraseña: "",
-      reg: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
-      rulesMail: [
-        (value) => !!value || "Requerido.",
-        (value) => value && value.length <= 50,
-      ],
-      rulesContraseña: [
-        (value) => !!value || "Requerido.",
-        (value) => value && value.length <= 50,
-      ],
-      showError: false,
-      error: "",
-    },
-  }),
-  props: {
-    source: String,
-  },
+  
   methods: {
     logOut() {
       sessionStorage.removeItem("mail");
