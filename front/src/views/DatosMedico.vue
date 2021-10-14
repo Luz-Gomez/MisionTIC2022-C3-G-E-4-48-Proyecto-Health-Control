@@ -2,9 +2,9 @@
   <body>
     <v-container>
       <h2>Perfil del Médico</h2>
-      <h3>
+      <h4>
         Completa la informacion de tu perfil y disfruta de nuestros servicios
-      </h3>
+      </h4>
       <v-row>
         <v-col cols="10" sm="8">
           <v-text-field
@@ -38,7 +38,7 @@
           ></v-text-field>
         </v-col>
       </v-row>
-      <h4>Ingresa tu número de celular, para podernos comunicar contigo.</h4>
+      <h5>Ingresa tu número de celular, para podernos comunicar contigo.</h5>
       <v-row>
         <v-col cols="12" sm="6">
           <v-text-field
@@ -51,7 +51,7 @@
           ></v-text-field>
         </v-col>
       </v-row>
-      <h4>Ingresa tus credenciales profesionales:</h4>
+      <h5>Ingresa tus credenciales profesionales:</h5>
       <v-row>
         <v-col cols="12" sm="6">
           <v-text-field
@@ -252,14 +252,14 @@ h2 {
   font-family: monospace;
   color: white;
 }
-h3 {
+h4 {
   padding: 10px 10px 10px 10px;
   text-align: left;
   font-size: 25px;
   font-family: monospace;
   color: white;
 }
-h4 {
+h5 {
   padding: 10px 10px 10px 10px;
   text-align: left;
   font-size: 20px;

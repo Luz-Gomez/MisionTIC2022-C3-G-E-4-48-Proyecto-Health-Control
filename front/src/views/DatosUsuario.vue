@@ -2,9 +2,9 @@
   <body>
     <v-container>
       <h2>Perfil del Usuario</h2>
-      <h3>
+      <h4>
         Completa la informacion de tu perfil y disfruta de nuestros servicios
-      </h3>
+      </h4>
       <v-row>
         <v-col cols="10" sm="8">
           <v-text-field
@@ -41,16 +41,45 @@
       </v-row>
       <v-row>
         <v-col cols="10" sm="8">
-          <v-date-picker v-model="picker" locale="es-CO" full-width>
-          </v-date-picker>
+          <v-menu
+            ref="menu"
+            v-model="menu"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            min-width="auto"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="fechaNacimiento"
+                label="Fecha de Nacimiento"
+                prepend-icon="mdi-calendar"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              v-model="fechaNacimiento"
+              locale="es-CO"
+              :active-picker.sync="activePicker"
+              :max="
+                new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+                  .toISOString()
+                  .substr(0, 10)
+              "
+              min="1920-01-01"
+              @change="save"
+            ></v-date-picker>
+          </v-menu>
         </v-col>
       </v-row>
 
-      <h3>Los datos a continuacion son opcionales</h3>
-      <h4>
+      <h4>Los datos a continuacion son opcionales</h4>
+      <h5>
         Si desea que la aplicacion calcule su IMC y Categoria de peso diligencie
         la siguiente información
-      </h4>
+      </h5>
       <v-row>
         <v-col cols="2" sm="2">
           <v-text>Estatura</v-text>
@@ -90,10 +119,10 @@
           ></v-text-field>
         </v-col>
       </v-row>
-      <h4>
+      <h5>
         Si desea que podamos contactarnos con usted, favor indiquenos un numero
         de celular
-      </h4>
+      </h5>
       <v-row>
         <v-col cols="12" sm="6">
           <v-text-field
@@ -106,10 +135,10 @@
           ></v-text-field>
         </v-col>
       </v-row>
-      <h4>
+      <h5>
         Si desea que su medico pueda revisar sus datos de presion y peso,
         indiquenos nombre y apellido
-      </h4>
+      </h5>
       <v-row>
         <v-col cols="10" sm="4">
           <v-text-field
@@ -170,7 +199,9 @@ export default {
     return {
       nombre: "",
       apellido: "",
-      fechaNacimiento: "",
+      activePicker: null,
+      fechaNacimiento: null,
+      menu: false,
       peso: "",
       estatura: "",
       celular: "",
@@ -189,13 +220,16 @@ export default {
       medicoRules: [
         (value) => (value && value.length >= 3) || "Mínimo 3 characters",
       ],
-      picker: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-        .toISOString()
-        .substr(0, 10),
 
       isEdit: false,
     };
   },
+  watch: {
+    menu(val) {
+      val && setTimeout(() => (this.activePicker = "YEAR"));
+    },
+  },
+
   computed: {
     calcularIMC: function () {
       let indice = parseFloat(this.peso / this.estatura ** 2);
@@ -228,7 +262,7 @@ export default {
           this.mail = perfilUsuario.mail;
           this.nombre = perfilUsuario.nombre;
           this.apellido = perfilUsuario.apellido;
-          this.picker = perfilUsuario.fechaNacimiento;
+          this.fechaNacimiento = perfilUsuario.fechaNacimiento;
           this.estatura = perfilUsuario.estatura;
           this.peso = perfilUsuario.peso;
           this.celular = perfilUsuario.celular;
@@ -255,8 +289,8 @@ export default {
         this.nombre == "" ||
         this.apellido == undefined ||
         this.apellido == "" ||
-        this.picker == undefined ||
-        this.picker == ""
+        this.fechaNacimiento == undefined ||
+        this.fechaNacimiento == ""
       ) {
         console.error("Registre Datos obligatorios");
         return;
@@ -266,7 +300,7 @@ export default {
         mail: this.mail,
         nombre: this.nombre,
         apellido: this.apellido,
-        fechaNacimiento: this.picker,
+        fechaNacimiento: this.fechaNacimiento,
         estatura: this.estatura,
         peso: this.peso,
         celular: this.celular,
@@ -292,8 +326,8 @@ export default {
         this.nombre == "" ||
         this.apellido == undefined ||
         this.apellido == "" ||
-        this.picker == undefined ||
-        this.picker == ""
+        this.fechaNacimiento == undefined ||
+        this.fechaNacimiento == ""
       ) {
         console.log("Ingrese los campos obligatorios");
         return;
@@ -314,11 +348,14 @@ export default {
         .then((response) => console.log(response), window.location.reload())
         .catch((err) => console.error(err));
     },
+    save(fechaNacimiento) {
+      this.$refs.menu.save(fechaNacimiento);
+    },
   },
 };
 </script>
 
-<style>
+<style scope>
 h2 {
   padding: 60px 10px 10px 10px;
   text-align: left;
@@ -326,14 +363,14 @@ h2 {
   font-family: monospace;
   color: white;
 }
-h3 {
+h4 {
   padding: 10px 10px 10px 10px;
   text-align: left;
   font-size: 25px;
   font-family: monospace;
   color: white;
 }
-h4 {
+h5 {
   padding: 10px 10px 10px 10px;
   text-align: left;
   font-size: 20px;

@@ -2,7 +2,7 @@
   <body>
     <v-container>
       <h2>Toma Presión Arterial</h2>
-      <h3>Por favor registre sus tomas de presión</h3>
+      <h4>Por favor registre sus tomas de presión</h4>
       <v-row>
         <v-col cols="12" sm="6">
           <v-text>Mail</v-text>
@@ -203,17 +203,17 @@ h2 {
   font-family: monospace;
   color: white;
 }
-h3 {
+h4 {
   padding: 10px 10px 10px 10px;
-  text-align: left;
+  text-align: center;
   font-size: 25px;
   font-family: monospace;
   color: white;
 }
-h4 {
+h5 {
   padding: 10px 10px 10px 10px;
   text-align: left;
-  font-size: 20px;
+  font-size: 30px;
   font-family: monospace;
   color: white;
 }

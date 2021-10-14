@@ -26,9 +26,12 @@
       <v-row align="center" justify="space-around">
         <v-btn to="/IniciarSesion" large color="#FFBE5E" dark
           >Iniciar Sesión</v-btn
+        >
+        <v-btn large color="#FFBE5E" dark @click="logOut()"
+          >Cerrar Sesión</v-btn
         > </v-row
       ><br /><br />
-      <h3>¿Qué puedes hacer con Health control?</h3>
+      <h3 align="center">¿Qué puedes hacer con Health control?</h3>
       <br />
       <v-card class="mx-auto" max-width="600" tile>
         <v-list-item>
@@ -75,15 +78,13 @@
               plataforma.</v-list-item-subtitle
             >
           </v-list-item-content>
-        </v-list-item>
-      </v-card><br>
+        </v-list-item> </v-card
+      ><br />
     </body>
   </div>
 </template>
 
 <script>
-import { validarUsuario } from "../services/Login.Service";
-
 export default {
   data: () => ({
     step: 1,
@@ -107,22 +108,10 @@ export default {
     source: String,
   },
   methods: {
-    loginFunction() {
-      validarUsuario(this.mail, this.contraseña)
-        .then((respuesta) => {
-          const usuario = respuesta.data;
-          sessionStorage.setItem("mail", usuario.mail);
-          sessionStorage.setItem("tipo", usuario.tipo);
-          this.$emit("logged", undefined);
-          window.location.reload();
-        })
-        .catch((err) => {
-          this.showError = true;
-          this.error = err.respuesta.data.message;
-          setInterval(() => {
-            this.showError = false;
-          }, 3000);
-        });
+    logOut() {
+      sessionStorage.removeItem("mail");
+      sessionStorage.removeItem("tipo");
+      window.location.reload();
     },
   },
 };
@@ -145,10 +134,17 @@ h1 {
   padding: 50px 25px 20px 25px;
   color: white;
 }
+h2 {
+  text-align: left;
+  font-family: monospace;
+  font-size: 25px;
+  padding: 50px 25px 20px 25px;
+  color: white;
+}
 h3 {
   text-align: center;
   font-family: monospace;
-  font-size: 40px;
+  font-size: 30px;
   color: white;
 }
 p {
