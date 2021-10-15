@@ -9,9 +9,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@heroku/buildpack-registry": "^1.0.1",
+    "async-file": "^2.0.2",
     "axios": "^0.22.0",
+    "cli-ux": "^5.6.3",
     "core-js": "^3.6.5",
+    "got": "^11.8.2",
     "heroku": "^7.59.0",
+    "phoenix": "^1.6.2",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuetify": "^2.4.0"
