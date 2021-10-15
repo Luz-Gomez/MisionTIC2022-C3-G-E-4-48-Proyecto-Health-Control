@@ -14,29 +14,19 @@
       </template>
 
       <v-list>
-        <v-list-item v-if="!isLoggedIn">
-          <v-list-item-title @click="showLogin = true"
-            >Iniciar sesión</v-list-item-title
-          >
+        <v-list-item v-if="!isLoggedIn" to="/IniciarSesion">
+          <v-list-item-title>Iniciar sesión</v-list-item-title>
         </v-list-item>
         <v-list-item v-if="isLoggedIn" @click="logOut()">
           <v-list-item-title>Cerrar sesión</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-dialog v-model="showLogin" max-width="600px">
-      <Login v-on:logged="showLogin = false"></Login>
-    </v-dialog>
   </v-app-bar>
 </template>
 
 <script>
-import Login from "./Login.vue";
-
 export default {
-  components: {
-    Login,
-  },
   props: ["title", "drawer"],
   data() {
     return {
@@ -50,6 +40,7 @@ export default {
     logOut() {
       sessionStorage.removeItem("mail");
       sessionStorage.removeItem("tipo");
+      this.$emit("log-out");
       this.$router.push("/");
     },
   },

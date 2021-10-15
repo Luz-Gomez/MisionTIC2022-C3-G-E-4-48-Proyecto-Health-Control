@@ -1,11 +1,13 @@
 <template>
   <v-app>
-    <DrawerBar :drawer="drawer" :title="name"></DrawerBar>
+    <DrawerBar :drawer="drawer" :title="name" :key="updateBars"></DrawerBar>
 
     <AppBar
       :title="name"
       :drawer="drawer"
       @switch-drawer="switchDrawer"
+      @log-out="updateBars--"
+      :key="updateBars"
     ></AppBar>
 
     <!-- Sizes your content based upon application components -->
@@ -14,7 +16,7 @@
       <v-container fluid>
         <!-- If using vue-router -->
         <transition name="slide" mode="out-in">
-          <router-view></router-view>
+          <router-view @log-in="updateBars++"></router-view>
         </transition>
       </v-container>
     </v-main>
@@ -38,8 +40,9 @@ export default {
   data: () => ({
     name: "Health control",
     drawer: null,
+    updateBars: 1,
   }),
-  updated(){
+  updated() {
     console.log("app actualizada");
   },
   methods: {

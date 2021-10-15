@@ -174,13 +174,19 @@
         required
       ></v-checkbox>
       <v-row align="center" justify="space-around">
-        <v-btn rounded color="#FFBE5E" dark @click="guardarUsuario()">Guardar</v-btn>
-        <v-btn rounded color="#FFBE5E" dark @click="actualizar()">Actualizar</v-btn>
+        <v-btn rounded color="#FFBE5E" dark @click="guardarUsuario()"
+          >Guardar</v-btn
+        >
+        <v-btn rounded color="#FFBE5E" dark @click="actualizar()"
+          >Actualizar</v-btn
+        >
         <v-btn to="/Consejos" rounded color="#FFBE5E" dark @click="consejos()"
           >Consejos</v-btn
         >
-        <v-btn to="/TomaPresion" rounded color="#FFBE5E" dark>Toma Presión</v-btn>
-        <v-btn to="/About" rounded color="#FFBE5E" dark>Regresar</v-btn>
+        <v-btn to="/TomaPresion" rounded color="#FFBE5E" dark
+          >Toma Presión</v-btn
+        >
+        <v-btn to="/" rounded color="#FFBE5E" dark>Regresar</v-btn>
         <br /><br />
       </v-row> </v-container
     ><br />
