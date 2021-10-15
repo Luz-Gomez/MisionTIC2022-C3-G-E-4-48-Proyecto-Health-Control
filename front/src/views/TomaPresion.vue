@@ -69,10 +69,13 @@
       </v-row>
       <br /><br />
       <v-row align="center" justify="space-around">
-        <v-btn rounded color="#65B3FC" @click="guardarPresion()">Guardar</v-btn>
-        <v-btn to="/Tips" rounded color="#65B3FC" @click="tips()"
+        <v-btn rounded color="#FFBE5E" dark @click="guardarPresion()"
+          >Guardar</v-btn
+        >
+        <v-btn to="/Tips" rounded color="#FFBE5E" dark @click="tips()"
           >Tips sobre tu Nivel de Presión</v-btn
         >
+        <v-btn to="/" rounded color="#FFBE5E" dark>Regresar</v-btn>
         <br /><br />
       </v-row>
       <br /><br />

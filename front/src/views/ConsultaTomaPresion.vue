@@ -21,7 +21,7 @@
           <v-data-table
             :headers="headers"
             :items="tomasPresion"
-            :items-per-page="8"
+            :items-per-page="5"
             item-key="mail"
             class="elevation-1"
           >
@@ -37,7 +37,7 @@
       </v-row>
       <br /><br />
       <v-row justify="space-around">
-        <v-btn to="/About" rounded color="primary">Regresar</v-btn>
+        <v-btn to="/" rounded color="#FFBE5E" dark>Regresar</v-btn>
         <br /><br />
       </v-row>
       <br /><br />

@@ -59,7 +59,8 @@ export default {
   data() {
     return {
       mail: "",
-
+      username: "",
+      tipo: "",
       items: [
         { nombre: "Inicio", imagen: "mdi-home", ruta: "/", ver: true },
         {
