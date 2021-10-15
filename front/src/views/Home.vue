@@ -86,7 +86,6 @@
 
 <script>
 export default {
-  
   methods: {
     logOut() {
       sessionStorage.removeItem("mail");
